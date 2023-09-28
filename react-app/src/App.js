@@ -1,5 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
+import Parse from 'parse';
+
+Parse.initialize(
+  "1yhC2skdeFM9dAYY5a015F8Ltb3rOxcwYuTgzSUv", //APP_ID
+  "xqCZeFbORWoNcYSVyrTxtP1sPpynqjYkLB2HZyhY",// JAVASCRIPT_KEY
+);
+
+Parse.serverURL = 'https://parseapi.back4app.com/';
 
 function App() {
   return (
