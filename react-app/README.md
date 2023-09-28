@@ -68,3 +68,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+2. Found some Info regarding APIs
+
+- there is multitude of FREE stock APIs.
+  -- https://levelup.gitconnected.com/top-10-financial-apis-in-2023-54505fcd910a
+  -- also a few sports betting ones I found
+  -- (bet365 one in particular) https://rapidapi.com/collection/sports-odds-betting-apis
+  -- https://datarade.ai/top-lists/best-sports-betting-apis
+- So i think we can proceed with either. We will want to test the one we will use and find out how many request we estimate that we will need.
