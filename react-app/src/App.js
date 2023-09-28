@@ -1,10 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
+const Parse = require('parse');
 import Parse from 'parse';
 
 Parse.initialize(
   "1yhC2skdeFM9dAYY5a015F8Ltb3rOxcwYuTgzSUv", //APP_ID
-  "xqCZeFbORWoNcYSVyrTxtP1sPpynqjYkLB2HZyhY",// JAVASCRIPT_KEY
+  "xqCZeFbORWoNcYSVyrTxtP1sPpynqjYkLB2HZyhY", // JAVASCRIPT_KEY
+  "VtPJ6uAlQSUcepIzcwwO5RQ6MsWxs5Up6Qr56aGU" // MASTER_KEY
 );
 
 Parse.serverURL = 'https://parseapi.back4app.com/';
