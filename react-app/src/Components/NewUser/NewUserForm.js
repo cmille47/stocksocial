@@ -1,15 +1,15 @@
-import { html } from "https://unpkg.com/htm/preact/standalone.module.js";
+import React from "react";
 
 const NewUserForm = ({ formData, handleInput, handleSubmit }) => {
-  return html`
-    <form onSubmit=${handleSubmit}>
+  return (
+    <form onSubmit={handleSubmit}>
       <label>
         Username:
         <input
           type="text"
           name="username"
-          value=${formData.username}
-          onInput=${handleInput}
+          value={formData.username}
+          onChange={handleInput}
         />
       </label>
       <br />
@@ -18,8 +18,8 @@ const NewUserForm = ({ formData, handleInput, handleSubmit }) => {
         <input
           type="password"
           name="password"
-          value=${formData.password}
-          onInput=${handleInput}
+          value={formData.password}
+          onChange={handleInput}
         />
       </label>
       <br />
@@ -28,8 +28,8 @@ const NewUserForm = ({ formData, handleInput, handleSubmit }) => {
         <input
           type="email"
           name="email"
-          value=${formData.email}
-          onInput=${handleInput}
+          value={formData.email}
+          onChange={handleInput}
         />
       </label>
       <br />
@@ -38,14 +38,14 @@ const NewUserForm = ({ formData, handleInput, handleSubmit }) => {
         <input
           type="text"
           name="displayName"
-          value=${formData.displayName}
-          onInput=${handleInput}
+          value={formData.displayName}
+          onChange={handleInput}
         />
       </label>
       <br />
       <button type="submit">Create User</button>
     </form>
-  `;
+  );
 };
 
 export default NewUserForm;

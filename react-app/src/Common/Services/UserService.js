@@ -33,7 +33,7 @@ export const getAllUsers = async () => {
 
 
 // Function to create a new user in the database
-const createUser = async (user_info) => {
+export const createUser = async (user_info) => {
     const user = new User();
 
     // Set user attributes using the database column names

@@ -1,11 +1,11 @@
 import React from "react";
-import UsersList from "./UsersList.js"
+import ParentComponent from "../NewUser/NewUser"; // Import the ParentComponent component
 
 const MainModule = () => {
     return (
         <div>
-            This is the main module.
-            <UsersList />
+            <h1>Welcome to the Main Component</h1>
+            <ParentComponent />
         </div>
     );
 };
