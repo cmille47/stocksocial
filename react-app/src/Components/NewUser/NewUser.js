@@ -4,7 +4,7 @@ import NewUserForm from "./NewUserForm";
 
 // Define the parent component
 // creating a default formData in parent component
-const ParentComponent = () => {
+const NewUser = () => {
     // Define state to store form input values
     const [formData, setFormData] = useState({
         username: "",
@@ -52,4 +52,4 @@ const ParentComponent = () => {
     );
 };
 
-export default ParentComponent;
+export default NewUser;

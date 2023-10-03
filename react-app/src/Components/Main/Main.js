@@ -1,11 +1,18 @@
 import React from "react";
-import ParentComponent from "../NewUser/NewUser"; // Import the ParentComponent component
+import NewUser from "../NewUser/NewUser"; // Import the ParentComponent component
+import UsersList from "./UsersList";
 
 const MainModule = () => {
     return (
         <div>
-            <h1>Welcome to the Main Component</h1>
-            <ParentComponent />
+            <div>
+                <h1>Welcome to the Main Component</h1>
+                <NewUser />
+            </div>
+            <div style={{marginTop: '10px'}}>
+                Current UsersList:
+                <UsersList />
+            </div>
         </div>
     );
 };
