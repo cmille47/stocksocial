@@ -4,9 +4,9 @@ import Parse from 'parse';
 import Components from "./Components/Components.js"
 
 Parse.initialize(
-  "1yhC2skdeFM9dAYY5a015F8Ltb3rOxcwYuTgzSUv", //APP_ID
-  "xqCZeFbORWoNcYSVyrTxtP1sPpynqjYkLB2HZyhY", // JAVASCRIPT_KEY
-  "VtPJ6uAlQSUcepIzcwwO5RQ6MsWxs5Up6Qr56aGU" // MASTER_KEY
+  "CFFw5eAHjZZTRjyaBeNL5d3gPcCsMvuBABU8ihJ9", //APP_ID
+  "qNxy0Yirqeh2M1XBicNvxKV9TcR3swF80PXyk9B1", // JAVASCRIPT_KEY
+  "PazJuUlwi6iE2IDOFkohbXkRDynJcyaPI74O9ZJ4" // MASTER_KEY
 );
 
 Parse.serverURL = 'https://parseapi.back4app.com/';
