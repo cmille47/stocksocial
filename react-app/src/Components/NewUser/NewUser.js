@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { createUser } from "../../Common/Services/UserService"; // Import the createUser function
 import NewUserForm from "./NewUserForm";
+import { useNavigate } from "react-router-dom";
 
 // Define the parent component
 // creating a default formData in parent component
 const NewUser = () => {
+    const history = useNavigate();
     // Define state to store form input values
     const [formData, setFormData] = useState({
         username: "",
@@ -33,6 +35,7 @@ const NewUser = () => {
             const result = await createUser(formData);
             // Optionally, you can show a success message or redirect the user.
             console.log("User created successfully:", result);
+            history("../Dashboard/Dashboard.js");
         } catch (error) {
             console.error("Error creating user:", error);
             // Handle the error, such as showing an error message to the user.
