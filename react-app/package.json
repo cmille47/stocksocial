@@ -9,6 +9,8 @@
     "@testing-library/user-event": "^13.5.0",
     "mdb-react-ui-kit": "^6.3.0",
     "mdbreact": "^5.2.0",
+    "axios": "^1.5.1",
+    "https": "^1.0.0",
     "parse": "^4.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

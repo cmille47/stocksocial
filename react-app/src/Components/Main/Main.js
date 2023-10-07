@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import NewUser from "../NewUser/NewUser"; // Import the ParentComponent component
 import UsersList from "./UsersList";
+import {getAStock, getAllStocks} from "../../Common/Services/GetStockInfo.js";
 
 import {
     MDBBtn,
@@ -56,6 +57,14 @@ const MainModule = () => {
 
 /*
 const MainModule = () => {
+    const [stockData, setstockData] = useState([]);
+
+    useEffect(() => {
+        getAllStocks().then((data) => {
+            console.log(data);
+        });
+    }, []);
+
     return (
         <div>
             <div>
