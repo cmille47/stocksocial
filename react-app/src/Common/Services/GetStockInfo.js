@@ -25,3 +25,19 @@ export const getAStock = async () => {
         console.error('Error:', error);
     }
 };
+
+
+export const getDailyChartData = async () => {
+  const apiKey = '942d8f501f25a9ffeacffaafbbdd8270';
+  const company = 'AAPL';
+  const toDate = '2023-10-01';
+  const fromDate = '2020-10-10';
+  const url = `https://financialmodelingprep.com/api/v3/historical-price-full/${company}&apikey=${apiKey}`;
+
+  try{
+    const response = await axios.get(url);
+    console.log('Data:', response.data);
+  } catch (error) {
+    console.log('Error:', error);
+  }
+}
