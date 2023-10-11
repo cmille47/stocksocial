@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import NewUser from "../NewUser/NewUser"; // Import the ParentComponent component
 import UsersList from "./UsersList";
 import {getAStock, getAllStocks} from "../../Common/Services/GetStockInfo.js";
+import Ticker from "../../Images/Ticker.png";
 
 import {
     MDBBtn,
@@ -24,9 +25,9 @@ const MainModule = () => {
             <MDBRow className='g-0'>
 
             <MDBCol md='6'>
-                <MDBCardImage src='~/stocksocial/react-app/src/Images/Ticker.webp' alt="Stock Photo" className='rounded-start w-100'/>
+                {/* figured out image, may need some more formatting */}
+                <MDBCardImage src={Ticker} alt="Stock Photo" className='rounded-start w-100' style={{height: '100%'}}/>
             </MDBCol>
-
             <MDBCol md='6'>
                 <MDBCardBody className='d-flex flex-column'>
 
