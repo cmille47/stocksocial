@@ -50,7 +50,6 @@ const UsersList = () => {
         getAllUsers().then((users) => {
             setUsers(users);
         });
-
         // getPortolioPositions(portfolioID).then((positions) => {
         //     setPositions(positions);
         // });
