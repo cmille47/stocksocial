@@ -1,34 +1,34 @@
 import React from "react";
 
-const NewUserForm = ({ formData, handleInput, handleSubmit }) => {
+const NewLeagueForm = ({ formData, handleInput, handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        LeagueName:
+        League Name:
         <input
           type="text"
-          name="LeagueName"
-          value={formData.LeagueName}
+          name="leagueName"
+          value={formData.leagueName}
           onChange={handleInput}
         />
       </label>
       <br />
       <label>
-        StartingAmount:
+        Starting Amount:
         <input
-          type="text"
-          name="StartingAmount"
+          type="number"
+          name="startingAmount"
           value={formData.StartingAmount}
           onChange={handleInput}
         />
       </label>
       <br />
       <label>
-        Email:
+        Number of Players:
         <input
-          type="text"
-          name="NumPlaters"
-          value={formData.NumPlayers}
+          type="number"
+          name="numPlayers"
+          value={formData.numPlayers}
           onChange={handleInput}
         />
       </label>
