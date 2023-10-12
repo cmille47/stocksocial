@@ -59,16 +59,14 @@ const MainModule = () => {
     );
 };
 
+const MainModule2 = () => {
+    // const [stockData, setstockData] = useState([]);
 
-/*
-const MainModule = () => {
-    const [stockData, setstockData] = useState([]);
-
-    useEffect(() => {
-        getAllStocks().then((data) => {
-            console.log(data);
-        });
-    }, []);
+    // useEffect(() => {
+    //     getAllStocks().then((data) => {
+    //         console.log(data);
+    //     });
+    // }, []);
 
     return (
         <div>
@@ -83,5 +81,5 @@ const MainModule = () => {
         </div>
     );
 };
-*/
+
 export default MainModule;
