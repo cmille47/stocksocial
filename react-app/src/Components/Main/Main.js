@@ -3,6 +3,8 @@ import NewUser from "../NewUser/NewUser"; // Import the ParentComponent componen
 import UsersList from "./UsersList";
 import { getAStock, getAllStocks } from "../../Common/Services/GetStockInfo.js";
 import Ticker from "../../Images/Ticker.png";
+import { useNavigate } from 'react-router-dom';
+
 
 import {
     MDBBtn,
@@ -18,6 +20,7 @@ import {
     from 'mdb-react-ui-kit'
 
 const MainModule = () => {
+    const navigate = useNavigate();
     return (
         <MDBContainer className="my-5">
 
@@ -41,7 +44,8 @@ const MainModule = () => {
                             <MDBInput wrapperClass='mb-4' label='Email address' id='formControlLg' type='email' size="lg" />
                             <MDBInput wrapperClass='mb-4' label='Password' id='formControlLg' type='password' size="lg" />
 
-                            <MDBBtn className="mb-4 px-5" color='dark' size='lg'>Login</MDBBtn>
+                            {/* <MDBBtn className="mb-4 px-5" color='dark' size='lg'>Login</MDBBtn> */}
+                            <MDBBtn className="mb-4 px-5" color="dark" size="lg" onClick={() => navigate('../Dashboard/Dashboard.js')}> Login </MDBBtn>
                             <a className="small text-muted" href="#!">Forgot password?</a>
                             <p className="mb-5 pb-lg-2" style={{ color: '#393f81' }}>Don't have an account? <a href="#!" style={{ color: '#393f81' }}>Register here</a></p>
 
