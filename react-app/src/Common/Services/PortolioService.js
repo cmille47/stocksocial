@@ -14,7 +14,7 @@ export const getAllUserPortfolios = async (userID) => {
 };
 
 // gets users portolio for a specific league
-export const getUserLeaguePortolio = async (userID, leagueID) => {
+export const getUserLeaguePortfolio = async (userID, leagueID) => {
     const Portfolio = Parse.Object.extend('Portfolio');
     const query = new Parse.Query(Portfolio);
     query.equalTo('UserID', userID);
@@ -28,7 +28,7 @@ export const getUserLeaguePortolio = async (userID, leagueID) => {
     }
 };
 
-export const getLeaguePortoflios = async (leagueID) => {
+export const getLeaguePortfolios = async (leagueID) => {
     const Portfolio = Parse.Object.extend('Portfolio');
     const query = new Parse.Query(Portfolio);
     query.equalTo('LeagueID', leagueID);
@@ -42,7 +42,7 @@ export const getLeaguePortoflios = async (leagueID) => {
 };
 
 // idk if this one will ever be used
-export const getPortolio = async (portfolioID) => {
+export const getPortfolio = async (portfolioID) => {
     const Portfolio = Parse.Object.extend('Portfolio');
     const query = new Parse.Query(Portfolio);
     query.equalTo('objectId', portfolioID);
