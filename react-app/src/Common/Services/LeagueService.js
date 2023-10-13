@@ -16,9 +16,12 @@ export const getLeague = async (leagueID) => {
 export const createLeague = async (leagueInfo) => {
     const League = Parse.Object.extend("League");
     const league = new League();
-    league.set('LeagueName', leagueInfo.leagueName);
-    league.set('NumPlayers', leagueInfo.numPlayers);
-    league.set('StartingAmount', leagueInfo.startingAmount);
+
+
+
+    league.set('LeagueName', leagueInfo.leagueName); 
+    league.set('StartingAmount', parseInt(leagueInfo.startingAmount));
+    league.set('NumPlayers', parseInt(leagueInfo.numPlayers));
 
     try {
         const result = await league.save();
