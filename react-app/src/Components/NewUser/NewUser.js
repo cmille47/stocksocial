@@ -35,7 +35,7 @@ const NewUser = () => {
             const result = await createUser(formData);
             // Optionally, you can show a success message or redirect the user.
             console.log("User created successfully:", result);
-            history("../Dashboard/Dashboard.js");
+            history("/Dashboard");
         } catch (error) {
             console.error("Error creating user:", error);
             // Handle the error, such as showing an error message to the user.
