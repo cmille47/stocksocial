@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Ticker from "../../Images/Ticker.png";
-import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
 
@@ -17,9 +16,7 @@ import {
 }
     from 'mdb-react-ui-kit'
 
-const AuthForm = ({ usercreds, onChange, onSubmit }) => {
-    const navigate = useNavigate();
-
+const AuthForm = ({onChange, onSubmit }) => {
     return (
         <div>
             <form onSubmit={onSubmit}>
@@ -57,7 +54,7 @@ const AuthForm = ({ usercreds, onChange, onSubmit }) => {
                                         onChange={onChange}
                                     />
                                     <MDBBtn className="mb-4 px-5" color="dark" size="lg" onClick={onSubmit}> Login </MDBBtn>
-                                    <p className="mb-5 pb-lg-2">Don't have an account? <Link to="/" style={{ color: '#393f81' }}>Register here</Link></p>
+                                    <p className="mb-5 pb-lg-2">Don't have an account? <Link to="/signup" style={{ color: '#393f81' }}>Register here</Link></p>
                                 </MDBCardBody>
                             </MDBCol>
 

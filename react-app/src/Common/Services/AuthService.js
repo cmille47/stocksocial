@@ -6,14 +6,9 @@ export const createUser = async (user_info) => {
     user.set("username", user_info.username);
     user.set("password", user_info.password);
     user.set("email", user_info.email);
-    user.set("displayName", user_info.displayName);
+    user.set("displayName", user_info.firstname + " " + user_info.lastname);
 
-    return user.signUp().then((newUserSaved) => {
-        return newUserSaved;
-    })
-    .catch((error) => {
-        return error;
-    });
+    return user.signUp();
 };
 
 // utilize parse user function for login

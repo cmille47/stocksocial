@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { loginUser } from "../../Common/Services/AuthService";
 import AuthForm from "./AuthForm";
 
 const AuthLogin = () => {
+    const history = useNavigate();
     const [usercreds, setUsercreds] = useState({
         email: "",
         password: ""
@@ -22,16 +24,17 @@ const AuthLogin = () => {
         loginUser(usercreds).then((res) => {
             setLogin(true);
             console.log("LOGIN SUCCESFUL", res);
+            history('/dashboard') // navigate to dashboard on successful login
         })
-            .catch((err) => {
-                console.log(err);
-            });
+        .catch((err) => {
+            console.log(err);
+            // NEED TO ADD ALERT LOGIC OR SOMETHING HERE
+        });
     };
 
     return (
         <div>
             <AuthForm
-                usercreds={usercreds}
                 onChange={onChange}
                 onSubmit={onSubmit}
             />

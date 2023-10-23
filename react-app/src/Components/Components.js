@@ -4,17 +4,17 @@ import AuthLogin from "./Auth/AuthLogin.js"
 import Dashboard from "./Dashboard/Dashboard.js"
 import Portfolio from "./Portfolio/Portfolio.js"
 import League from "./League/League.js"
-import NewUser from "./NewUser/NewUser.js"
+import AuthSignup from "./Auth/AuthSignup.js";
 
 const Components = () => {
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<AuthLogin />} />
+                <Route path="/signup" element={<AuthSignup />} />
                 <Route path="/Portfolio/:portfolio_name/:portfolio_id" element={<Portfolio />} />
                 <Route path="/Dashboard" element={<Dashboard />} />
                 <Route path="/create-league" element={<League/>} />
-                <Route path="/NewUser" element={<NewUser/>} />
             </Routes>
         </Router>
     );

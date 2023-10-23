@@ -1,0 +1,16 @@
+.backgroundStyle {
+    background-image: url('../Images/MoneyTree.jpg');
+    /* Replace 'your-image-url' with the actual URL */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* cardStyle */
+.cardStyle {
+    margin: 50px auto;
+    max-width: 500px;
+}
