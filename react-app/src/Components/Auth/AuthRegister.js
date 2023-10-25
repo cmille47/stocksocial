@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { createUser } from "../../Common/Services/AuthService";
 import SignupForm from "./SignupForm";
 
-const AuthSignup = () => {
+const AuthRegister = () => {
 
   const history = useNavigate();
 
@@ -29,6 +29,7 @@ const AuthSignup = () => {
     try {
       const result = await createUser(formData);
       console.log("User created successfully:", result);
+      localStorage.setItem('user', JSON.stringify(result));
       history('/dashboard') // navigate to dashboard on successful creation
     } catch (error) {
       console.error("Error creating user:", error);
@@ -45,4 +46,4 @@ const AuthSignup = () => {
   );
 };
 
-export default AuthSignup;
+export default AuthRegister;

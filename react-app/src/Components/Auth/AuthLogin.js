@@ -24,6 +24,7 @@ const AuthLogin = () => {
         loginUser(usercreds).then((res) => {
             setLogin(true);
             console.log("LOGIN SUCCESFUL", res);
+            localStorage.setItem('user', JSON.stringify(res));
             history('/dashboard') // navigate to dashboard on successful login
         })
         .catch((err) => {
