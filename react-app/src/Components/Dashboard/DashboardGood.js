@@ -23,7 +23,7 @@ const DashboardGood = () => {
     return (
         <div>
             <section>
-                <h1>Welcome to the Dashboard component: {userID}</h1>
+                <h1>Welcome to the Dashboard component: {user.displayName}</h1>
                 <Link to="/create-league">
                     <button>Create League</button>
                 </Link>

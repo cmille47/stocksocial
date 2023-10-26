@@ -18,7 +18,7 @@ export default function Dashboard() {
   return (
     <div>
       <ProtectedRoute
-        path={`/Dashboard/${userID}`}
+        path={`/dashboard/${userID}`}
         element={DashboardGood}
       />
     </div>

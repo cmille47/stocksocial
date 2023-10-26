@@ -25,7 +25,9 @@ const AuthLogin = () => {
             setLogin(true);
             console.log("LOGIN SUCCESFUL", res);
             localStorage.setItem('user', JSON.stringify(res));
-            history('/dashboard') // navigate to dashboard on successful login
+            const goto = `/dashboard/${res.id}`;
+            console.log("goto: ", goto);
+            history(goto); // navigate to dashboard on successful login
         })
         .catch((err) => {
             console.log(err);
