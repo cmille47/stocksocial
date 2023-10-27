@@ -1,34 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { checkUser } from "./AuthService";
 
-const ProtectedRoute = ({ element: Component, flag, ...rest }) => {
+const ProtectedRoute = ({ element: Component, ...rest }) => {
     const navigate = useNavigate();
-    const goBackHandler = () => {
-        navigate(-1);
-    };
-
-    const isAuthorized = () => {
-        if (localStorage.getItem("user")) {
-            return true;
-        } else {
-            return false;
+    useEffect(() => {
+        if (!checkUser()) {
+            navigate('/');
         }
-    };
+    }, [navigate]);
 
-    if (!isAuthorized()) {
+    if (checkUser()) {
         return (
             <div>
-                <h1>Unauthorized</h1>
-                <button onClick={goBackHandler}>Go Back</button>
+                <Component />
             </div>
         );
-    };
-
-    return (
-        <div>
-            <Component />
-        </div>
-    );
+    }
 };
 
 export default ProtectedRoute;

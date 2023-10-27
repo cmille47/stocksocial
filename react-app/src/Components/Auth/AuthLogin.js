@@ -1,15 +1,22 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from "../../Common/Services/AuthService";
+import { checkUser, loginUser } from "../../Common/Services/AuthService";
 import AuthForm from "./AuthForm";
 
 const AuthLogin = () => {
     const history = useNavigate();
+
     const [usercreds, setUsercreds] = useState({
         email: "",
         password: ""
     });
-    const [login, setLogin] = useState(false);
+
+    useEffect(() => {
+        if (checkUser()) {
+            alert('You are already logged in!');
+            history('/dashboard');
+        }
+    }, [history]);
 
     // update usercreds when user fills in form
     const onChange = (e) => {
@@ -22,12 +29,9 @@ const AuthLogin = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         loginUser(usercreds).then((res) => {
-            setLogin(true);
             console.log("LOGIN SUCCESFUL", res);
             localStorage.setItem('user', JSON.stringify(res));
-            const goto = `/dashboard/${res.id}`;
-            console.log("goto: ", goto);
-            history(goto); // navigate to dashboard on successful login
+            history('/dashboard'); // navigate to dashboard on successful login
         })
         .catch((err) => {
             console.log(err);

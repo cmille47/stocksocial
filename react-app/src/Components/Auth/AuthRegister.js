@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, {useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createUser } from "../../Common/Services/AuthService";
+import { checkUser, createUser } from "../../Common/Services/AuthService";
 import SignupForm from "./SignupForm";
 
 const AuthRegister = () => {
@@ -14,6 +14,13 @@ const AuthRegister = () => {
     username: '',
     password: ''
   });
+
+  useEffect(() => {
+    if (checkUser()) {
+      alert('You are already logged in!');
+      history('/dashboard');
+    }
+  }, [history]);
 
   const onChange = (event) => {
     const { name, value } = event.target;

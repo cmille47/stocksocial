@@ -41,13 +41,14 @@ export const getLeaguePortfolios = async (leagueID) => {
     }
 };
 
-// idk if this one will ever be used
-export const getPortfolio = async (portfolioID) => {
+export const getPortfolio = async (portfolioID, userID) => {
     const Portfolio = Parse.Object.extend('Portfolio');
     const query = new Parse.Query(Portfolio);
     query.equalTo('objectId', portfolioID);
+    query.equalTo('UserID', userID);
     try {
         const result = await query.first();
+        if (result === undefined) {throw new Error('User portfolio does not exist');}
         return result;
     } catch (error) {
         console.error('Error fetching portfolio', error);

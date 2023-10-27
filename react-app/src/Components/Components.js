@@ -1,11 +1,10 @@
 import React from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
-import AuthLogin from "./Auth/AuthLogin.js"
-import Dashboard from "./Dashboard/DashboardHome.js"
-import Portfolio from "./Portfolio/Portfolio.js"
-import League from "./League/League.js"
+import AuthLogin from "./Auth/AuthLogin.js";
+import Dashboard from "./Dashboard/DashboardHome.js";
+import Portfolio from "./Portfolio/Portfolio.js";
+import League from "./League/League.js";
 import AuthRegister from "./Auth/AuthRegister.js";
-import DashboardGood from "./Dashboard/DashboardGood.js";
 import ProtectedRoute from "../Common/Services/ProtectedRoute.js";
 
 const Components = () => {
@@ -14,9 +13,8 @@ const Components = () => {
             <Routes>
                 <Route path="/" element={<AuthLogin />} />
                 <Route path="/signup" element={<AuthRegister />} />
-                <Route path="/Portfolio/:portfolio_name/:portfolio_id" element={<Portfolio />} />
+                <Route path="/Portfolio/:portfolio_name/:portfolio_id" element={<ProtectedRoute element={Portfolio} />} />
                 <Route path="/Dashboard" element={<Dashboard />} />
-                <Route path="/Dashboard/:userID" element={<ProtectedRoute element={DashboardGood} />} />
                 <Route path="/create-league" element={<League/>} />
                 <Route path="*" element = {<h1>404 Not Found</h1>} />
             </Routes>

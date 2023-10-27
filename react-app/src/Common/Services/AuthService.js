@@ -19,11 +19,16 @@ export const loginUser = async (user_info) => {
 };
 
 export const logoutUser = async () => {
-    return Parse.User.logOut().then(() => {
+    Parse.User.logOut().then(() => {
+        localStorage.clear();
         return true;
     })
     .catch((error) => {
         return error;
     });
 };
+
+export const checkUser = () => {
+    return Parse.User.current()?.authenticated;
+}
 

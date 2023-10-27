@@ -5,8 +5,8 @@ import { getAllUserPortfolios } from '../../Common/Services/PortolioService';
 // will need to add all the other stuff here too
 // like user leagues, etc. 
 const DashboardGood = () => {
-    const { userID } = useParams();
     const user = JSON.parse(localStorage.getItem('user'));
+    const userID = user.objectId;
     const [portfolios, setPortfolios] = useState([]);
 
     useEffect(() => {

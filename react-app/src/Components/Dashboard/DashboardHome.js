@@ -3,13 +3,10 @@ import ProtectedRoute from '../../Common/Services/ProtectedRoute';
 import DashboardGood from './DashboardGood';
 
 export default function Dashboard() {
-  const [userID, setUserID] = useState('')
 
   useEffect(() => {
     if (localStorage.getItem('user')) {
       console.log('authorized user')
-      const user = JSON.parse(localStorage.getItem('user'));
-      setUserID(user.objectId);
     } else {
       console.log('unauthorized');
     }
@@ -18,7 +15,7 @@ export default function Dashboard() {
   return (
     <div>
       <ProtectedRoute
-        path={`/dashboard/${userID}`}
+        path={`/dashboard`}
         element={DashboardGood}
       />
     </div>
