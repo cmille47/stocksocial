@@ -40,6 +40,7 @@ const AuthRegister = () => {
       history('/dashboard') // navigate to dashboard on successful creation
     } catch (error) {
       console.error("Error creating user:", error);
+      alert("Error creating user: " + error.message);
     }
   };
 

@@ -14,8 +14,8 @@ const Components = () => {
                 <Route path="/" element={<AuthLogin />} />
                 <Route path="/signup" element={<AuthRegister />} />
                 <Route path="/Portfolio/:portfolio_name/:portfolio_id" element={<ProtectedRoute element={Portfolio} />} />
-                <Route path="/Dashboard" element={<Dashboard />} />
-                <Route path="/create-league" element={<League/>} />
+                <Route path="/Dashboard" element={<Dashboard />} /> {/* protected in component itself */}
+                <Route path="/create-league" element={<ProtectedRoute element={League} />} />
                 <Route path="*" element = {<h1>404 Not Found</h1>} />
             </Routes>
         </Router>
