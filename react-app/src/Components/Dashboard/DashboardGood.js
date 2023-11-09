@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getAllUserPortfolios } from '../../Common/Services/PortolioService';
+import { searchLeaguesByName } from '../../Common/Services/LeagueService';
+import '../../Styles/DashboardGood.css';
 
 // will need to add all the other stuff here too
 // like user leagues, etc. 
@@ -9,6 +11,32 @@ const DashboardGood = () => {
     const userID = user.objectId;
     const [portfolios, setPortfolios] = useState([]);
 
+    //*********** 
+
+    // DashboardGood.js
+    const [searchTerm, setSearchTerm] = useState('');
+    const [matchingLeagues, setMatchingLeagues] = useState([]);
+
+
+    // DashboardGood.js
+    const handleSearchInputChange = (e) => {
+        const term = e.target.value;
+        setSearchTerm(term);
+        fetchMatchingLeagues(term); // Assuming you have a function for fetching matching leagues
+    };
+  
+    // DashboardGood.js
+    const fetchMatchingLeagues = async (term) => {
+        try {
+            const matchingLeagues = await searchLeaguesByName(term);
+            setMatchingLeagues(matchingLeagues);
+        } 
+        catch (error) {
+            console.error('Error fetching matching leagues', error);
+        }
+    };
+
+    // ***************
     useEffect(() => {
         getAllUserPortfolios(userID).then((portfolios) => {
             setPortfolios(portfolios);
@@ -40,6 +68,27 @@ const DashboardGood = () => {
                         ))}
                     </ul>
                 )}
+
+                <div className="search-container">
+                    <input
+                        type="text"
+                        placeholder="Search for leagues..."
+                        value={searchTerm}
+                        onChange={handleSearchInputChange}
+                        className="search-bar"
+                    />
+                    {matchingLeagues.length > 0 && (
+                    <ul className="matching-leagues-list">
+                        {matchingLeagues.map((league) => (
+                        <li key={league.id}>
+                            <Link to={`/league/${league.id}`}>
+                            {league.get('LeagueName')}
+                            </Link>
+                        </li>
+                        ))}
+                    </ul>
+                    )}
+                </div>
             </section>
         </div>
     );
