@@ -1,57 +1,59 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { getAllUserPortfolios } from '../../Common/Services/PortolioService';
-import { searchLeaguesByName } from '../../Common/Services/LeagueService';
+import { Link } from 'react-router-dom';
+import { getAllUserPortfoliosWithLeagueNames } from '../../Common/Services/PortfolioService';
+import { searchLeaguesByName, getLeagueByName } from '../../Common/Services/LeagueService';
 import '../../Styles/DashboardGood.css';
+import { useNavigate } from 'react-router-dom';
 
-// will need to add all the other stuff here too
-// like user leagues, etc. 
 const DashboardGood = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const userID = user.objectId;
     const [portfolios, setPortfolios] = useState([]);
-
-    //*********** 
-
-    // DashboardGood.js
     const [searchTerm, setSearchTerm] = useState('');
     const [matchingLeagues, setMatchingLeagues] = useState([]);
+    const navigate = useNavigate();
 
-
-    // DashboardGood.js
     const handleSearchInputChange = (e) => {
         const term = e.target.value;
         setSearchTerm(term);
-        fetchMatchingLeagues(term); // Assuming you have a function for fetching matching leagues
+        fetchMatchingLeagues(term);
     };
-  
-    // DashboardGood.js
+
     const fetchMatchingLeagues = async (term) => {
         try {
             const matchingLeagues = await searchLeaguesByName(term);
             setMatchingLeagues(matchingLeagues);
-        } 
-        catch (error) {
+        } catch (error) {
             console.error('Error fetching matching leagues', error);
         }
     };
 
-    // ***************
     useEffect(() => {
-        getAllUserPortfolios(userID).then((portfolios) => {
+        // Fetch user portfolios with their league names
+        getAllUserPortfoliosWithLeagueNames(userID).then((portfolios) => {
             setPortfolios(portfolios);
         });
     }, [userID]);
 
-    useEffect(() => {
-        console.log("portfolios: ", portfolios);
-        console.log("user: ", user);
-    }, [portfolios, user]);
+    const handleLeagueNameClick = async (leagueName) => {
+        try {
+            const league = await getLeagueByName(leagueName);
+            if (league) {
+                navigate(`/league/${league.id}`);
+            } else {
+                console.log('League not found');
+            }
+        } catch (error) {
+            console.error('Error fetching league by name', error);
+        }
+    };
 
     return (
         <div>
             <section>
                 <h1>Welcome to the Dashboard component: {user.displayName}</h1>
+                
+                
                 <Link to="/create-league">
                     <button>Create League</button>
                 </Link>
@@ -61,14 +63,21 @@ const DashboardGood = () => {
                     <ul>
                         {portfolios.map((portfolio) => (
                             <li key={portfolio.id}>
-                                <a href={`/Portfolio/${encodeURIComponent(portfolio.get("PortfolioName"))}/${portfolio.id}`}>
-                                    {portfolio.get("PortfolioName")}
-                                </a>
+                                <Link to={`/Portfolio/${encodeURIComponent(portfolio.PortfolioName)}/${portfolio.id}`}>
+                                    {portfolio.PortfolioName}
+                                </Link>
+                                - 
+                                <span
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => handleLeagueNameClick(portfolio.leagueName)}
+                                >
+                                    {portfolio.leagueName}
+                                </span>
                             </li>
                         ))}
                     </ul>
                 )}
-
+                
                 <div className="search-container">
                     <input
                         type="text"
@@ -78,17 +87,21 @@ const DashboardGood = () => {
                         className="search-bar"
                     />
                     {matchingLeagues.length > 0 && (
-                    <ul className="matching-leagues-list">
-                        {matchingLeagues.map((league) => (
-                        <li key={league.id}>
-                            <Link to={`/league/${league.id}`}>
-                            {league.get('LeagueName')}
-                            </Link>
-                        </li>
-                        ))}
-                    </ul>
+                        <ul className="matching-leagues-list">
+                            {matchingLeagues.map((league) => (
+                                <li key={league.id}>
+                                    <Link to={`/league/${league.id}`}>
+                                        {league.get('LeagueName')}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
                     )}
                 </div>
+
+
+
+
             </section>
         </div>
     );

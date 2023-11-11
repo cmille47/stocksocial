@@ -1,4 +1,5 @@
 import Parse from "parse";
+import { createNewPortfolio } from "./PortfolioService";
 
 
 export const getLeague = async (leagueID) => {
@@ -14,32 +15,76 @@ export const getLeague = async (leagueID) => {
     }
 };
 
-
-
-export const createLeague = async (leagueInfo) => {
-    const League = Parse.Object.extend("League");
+/*
+export const createLeague = async (leagueInfo, userId) => {
+    const League = Parse.Object.extend('League');
     const league = new League();
-
-
-
+  
     league.set('LeagueName', leagueInfo.leagueName); 
     league.set('StartingAmount', parseInt(leagueInfo.startingAmount));
     league.set('NumPlayers', parseInt(leagueInfo.numPlayers));
+    league.set('CreatorID', userId); // Utilize the userId passed as a parameter
+  
+    try {
+      const result = await league.save();
+  
+      // If league creation is successful, automatically add the user to the league
+      if (result && result.id) {
+        await addUserToLeague(userId, result.id);
+        console.log('User added to the league upon creation');
+      } else {
+        console.error('League creation failed');
+      }
+  
+      return result;
+    } catch (error) {
+        console.error('Error creating league', error);
+        throw error;
+    }  
+    
+  };
+*/
+
+export const createLeague = async (leagueInfo, userId) => {
+    const League = Parse.Object.extend('League');
+    const league = new League();
+
+    league.set('LeagueName', leagueInfo.leagueName);
+    league.set('StartingAmount', parseInt(leagueInfo.startingAmount));
+    league.set('NumPlayers', parseInt(leagueInfo.numPlayers));
+    league.set('CreatorID', userId);
 
     try {
         const result = await league.save();
+
+        if (result && result.id) {
+            await createNewPortfolio(userId, result.id, leagueInfo.leagueName);
+            console.log('User added to the league upon creation');
+        } else {
+            console.error('League creation failed');
+        }
+
         return result;
     } catch (error) {
-        console.error("Error creating league", error);
+        console.error('Error creating league', error);
+        throw error;
     }
 };
+  
+
+
+export const getUserIdFromStorage = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    return user ? user.objectId : null;
+  };
+  
 
 // leagueService.js
 export const searchLeaguesByName = async (term) => {
+    console.log('searchLeaguesByName function called with term:', term);
     const League = Parse.Object.extend("League");
     const query = new Parse.Query(League);
     query.startsWith("LeagueName", term);
-  
     try {
       const results = await query.find();
       return results;
@@ -106,6 +151,34 @@ export const updateCurrentPlayers = async (leagueId, currentPlayers) => {
       throw error;
     }
   };
+
+  export const getLeagueByName = async (leagueName) => {
+    const League = Parse.Object.extend('League');
+    const query = new Parse.Query(League);
+    query.equalTo('LeagueName', leagueName);
+    try {
+      const league = await query.first();
+      return league;
+    } catch (error) {
+      console.error('Error fetching league by name', error);
+      throw error;
+    }
+  };
+  
+
+
+
+
+
+
+
+
+
+
+ 
+
+  
+  
   
 
   
