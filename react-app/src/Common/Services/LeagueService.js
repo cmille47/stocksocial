@@ -52,13 +52,16 @@ export const createLeague = async (leagueInfo, userId) => {
     league.set('LeagueName', leagueInfo.leagueName);
     league.set('StartingAmount', parseInt(leagueInfo.startingAmount));
     league.set('NumPlayers', parseInt(leagueInfo.numPlayers));
+    const portfolioName = leagueInfo.portfolioName;
     league.set('CreatorID', userId);
 
+
+    console.log("LEAGUE SERVICE STARTING AMOUNT:", leagueInfo.startingAmount);
     try {
         const result = await league.save();
 
         if (result && result.id) {
-            await createNewPortfolio(userId, result.id, leagueInfo.leagueName);
+            await createNewPortfolio(userId, result.id, leagueInfo.startingAmount, portfolioName);
             console.log('User added to the league upon creation');
         } else {
             console.error('League creation failed');
@@ -94,49 +97,45 @@ export const searchLeaguesByName = async (term) => {
     }
   };
 
-export const addUserToLeague = async (userId, leagueId) => {
-    // Check if the user is already in the league
+  export const addUserToLeague = async (userId, leagueId) => {
     const LeagueMembership = Parse.Object.extend('LeagueMembership');
     const membershipQuery = new Parse.Query(LeagueMembership);
     membershipQuery.equalTo('userId', userId);
     membershipQuery.equalTo('leagueId', leagueId);
 
     try {
-    const existingMembership = await membershipQuery.first();
+        const existingMembership = await membershipQuery.first();
 
-    if (existingMembership) {
-    // User is already in the league
-    console.log('User is already in the league');
-    return;
-    }
-
-    // If not, add the user to the league
-    const newMembership = new LeagueMembership();
-    newMembership.set('userId', userId);
-    newMembership.set('leagueId', leagueId);
-
-    await newMembership.save();
-
-    console.log('User added to the league successfully');
+        if (!existingMembership) {
+            const newMembership = new LeagueMembership();
+            newMembership.set('userId', userId);
+            newMembership.set('leagueId', leagueId);
+            await newMembership.save();
+            console.log('User added to the league successfully');
+        } else {
+            console.log('User is already in the league');
+        }
     } catch (error) {
-    console.error('Error adding user to the league', error);
-    throw error;
+        console.error('Error adding user to the league', error);
+        throw error;
     }
-    };
+};
 
 export const checkUserInLeague = async (userId, leagueId) => {
-    const LeagueMembership = Parse.Object.extend('UsersToLeagues');
+    const LeagueMembership = Parse.Object.extend('LeagueMembership');
     const query = new Parse.Query(LeagueMembership);
     query.equalTo('userId', userId);
     query.equalTo('leagueId', leagueId);
+
     try {
-    const result = await query.first();
-    return result;
+        const result = await query.first();
+        return !!result; // Return true if result is found, indicating the user is in the league
     } catch (error) {
-    console.error('Error checking user in league', error);
-    throw error;
+        console.error('Error checking user in league', error);
+        throw error;
     }
 };
+
 
   // Function to update the current number of players in the league
 export const updateCurrentPlayers = async (leagueId, currentPlayers) => {
@@ -167,18 +166,17 @@ export const updateCurrentPlayers = async (leagueId, currentPlayers) => {
   
 
 
+export const getCurrentNumPlayers = async (leagueId) => {
+  const LeagueMembership = Parse.Object.extend('LeagueMembership');
+  const query = new Parse.Query(LeagueMembership);
+  query.equalTo('leagueId', leagueId);
 
+  try {
+    const memberships = await query.find();
+    return memberships.length;
+  } catch (error) {
+    console.error('Error getting current number of players in the league', error);
+    throw error;
+  }
+};
 
-
-
-
-
-
-
- 
-
-  
-  
-  
-
-  

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createLeague } from "../../Common/Services/LeagueService";
-import { createNewPortfolio } from "../../Common/Services/PortfolioService";
+// import { createNewPortfolio } from "../../Common/Services/PortfolioService";
 import NewLeagueForm from "./NewLeagueForm";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +12,8 @@ const NewLeague = () => {
 
     const [formData, setFormData] = useState({
         leagueName: "",
+        startingAmount: "",
+        numPlayers: "",
         portfolioName: "" // Include portfolio name in the form data
     });
 
@@ -22,7 +24,7 @@ const NewLeague = () => {
             [name]: value,
         });
     };
-
+    /*
     const handleSubmit = async (event) => {
         event.preventDefault();
         
@@ -41,8 +43,50 @@ const NewLeague = () => {
             console.error("Error creating League:", error);
         }
     };
+    */
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        
+        try {
+            // const { leagueName, startingAmount, numPlayers, portfolioName } = formData; // Destructure the form data
+            const result = await createLeague(formData, currentUser);
     
-      
+            if (result && result.id) {
+                // await createNewPortfolio(currentUser, result.id, portfolioName); // Create a new portfolio associated with the created league
+                console.log("League and Portfolio created successfully");
+                history("/Dashboard");
+            } else {
+                console.error("League creation failed");
+            }
+        } catch (error) {
+            console.error("Error creating League:", error);
+        }
+    };
+    
+
+
+    // one to eliminate double creation
+    /*
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+    
+        try {
+            const { leagueName, startingAmount, numPlayers } = formData; // Destructure the form data
+            const result = await createLeague({ leagueName, startingAmount, numPlayers }, currentUser);
+    
+            if (result && result.id) {
+                console.log("League created successfully");
+                history("/Dashboard");
+            } else {
+                console.error("League creation failed");
+            }
+        } catch (error) {
+            console.error("Error creating League:", error);
+        }
+    };
+    
+    */
 
     return (
         <div>

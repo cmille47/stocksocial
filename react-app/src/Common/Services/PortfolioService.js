@@ -77,13 +77,14 @@ export const getAllUserPortfoliosWithLeagueNames = async (userID) => {
 
 
 
-export const createNewPortfolio = async (userId, leagueId, portfolioName) => {
+export const createNewPortfolio = async (userId, leagueId, startingAmount, portfolioName) => {
     const Portfolio = Parse.Object.extend("Portfolio");
     const portfolio = new Portfolio();
 
     portfolio.set("UserID", userId);
     portfolio.set("LeagueID", leagueId);
     portfolio.set("PortfolioName", portfolioName); // Use the provided portfolio name
+    portfolio.set("StartingAmount", parseInt(startingAmount));
 
     try {
         const newPortfolio = await portfolio.save();
