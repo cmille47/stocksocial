@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PortfolioPage from './PortfolioPage.js';
-import { getPortfolio } from '../../Common/Services/PortolioService';
+import { getPortfolio, updatePortfolioCurrentValue } from '../../Common/Services/PortolioService';
 import { getPortfolioPositions, updateStockPrice } from '../../Common/Services/PositionService';
 import {searchForStock} from '../../Common/Services/StockService';
 import SearchStocks from './SearchStocks.js';
@@ -13,7 +13,7 @@ export default function Portfolio() {
 
     const [portfolio, setPortfolio] = useState(null);
     const [positions, setPositions] = useState([]);
-    const [currentValue, setCurrentValue] = useState(0);
+    const [currentValue, setCurrentValue] = useState(0.00);
     const [matchingStocks, setMatchingStocks] = useState([]);
 
     // Fetch portfolio info and positions
@@ -32,30 +32,30 @@ export default function Portfolio() {
         const fetchPortfolioPositions = async () => {
             try {
                 const positions = await getPortfolioPositions(portfolio_id);
-                const priceUpdatedPositions = await Promise.all(positions.map(async (position) => {
-                    return await updateStockPrice(position.id);
-                }));
-                setPositions(priceUpdatedPositions);
+                // const priceUpdatedPositions = await Promise.all(positions.map(async (position) => {
+                //     return await updateStockPrice(position.id);
+                // }));
+                setPositions(positions);
             } catch (error) {
                 console.error('Error fetching portfolio positions:', error);
             }
         };
         fetchPortfolioData();
         fetchPortfolioPositions();
-    }, [portfolio_id]);
+    }, [portfolio_id, navigate, user_id]);
 
     useEffect(() => {
         if (positions.length > 0){
             console.log('Updated Positions:', positions);
-
-            // calculate total portfolio value from all current positions
-            let temp = portfolio.get('RemainingCash');
-            positions.forEach((position) => {
-                temp += position.get('EndPrice') * position.get('Shares');
-            });
-            setCurrentValue(Math.round(temp * 100) / 100);
+            updatePortfolioCurrentValue(portfolio_id)
+                .then((curr_val) => {
+                    setCurrentValue(curr_val.toFixed(2));
+                })
+                .catch((error) => {
+                    console.error('Error updating portfolio current value:', error);
+                });
         }   
-    }, [positions]);
+    }, [positions, portfolio_id]);
 
     const onClick = (e) => {
         e.preventDefault();

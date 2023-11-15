@@ -4,7 +4,7 @@ const PortfolioPage = ({ portfolio, positions, val}) => {
             {(portfolio) &&
                 <div>
                     <h2> Portfolio Name: {portfolio.get("PortfolioName")} </h2>
-                    <h2> Currnet Value: {"$" + val} </h2>
+                    <h2> Current Value: {"$" + val} </h2>
                 </div>
             }
             <h2> Positions: </h2>

@@ -18,7 +18,7 @@ export const updateStockPrice = async (positionID) => {
     try {
         const Position = await query.get(positionID);
 
-        // get random 'new price' based on past price within 50% range
+        // get random 'new price'
         const past_price = Position.get('EndPrice'); 
         const new_price = past_price + (Math.random() - 0.5) * past_price;
 
