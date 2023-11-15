@@ -1,9 +1,9 @@
 // Inside LeagueDetails.js
 
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getLeague, checkUserInLeague, addUserToLeague } from '../../Common/Services/LeagueService';
-import { createNewPortfolio } from '../../Common/Services/PortfolioService';
+import { createNewPortfolio, getLeaguePortfolios } from '../../Common/Services/PortfolioService';
 import { getUserDetails } from '../../Common/Services/AuthService';
 import { getCurrentNumPlayers } from '../../Common/Services/LeagueService';
 
@@ -15,34 +15,53 @@ const LeagueDetails = () => {
   const [joinMessage, setJoinMessage] = useState('');
   const [creator, setCreator] = useState(null); // State to hold the creator's details
   const [currentPlayers, setCurrentPlayers] = useState(0);
+  const [leaguePortfolios, setLeaguePortfolios] = useState([]); // State to store league portfolios
+  const [userNames, setUserNames] = useState({}); // State to store user names based on UserID
 
   const user = JSON.parse(localStorage.getItem('user'));
   const userId = user.objectId;
 
   useEffect(() => {
-    getLeague(leagueId).then((details) => {
-      if (details) {
-        setLeagueDetails(details);
+    // Fetch league details, user membership, and portfolios when the component mounts
+    const fetchData = async () => {
+      const details = await getLeague(leagueId);
+      setLeagueDetails(details);
 
-        // Check if the user is already in the league
-        checkUserInLeague(userId, leagueId).then((existingMembership) => {
-          setIsUserInLeague(!!existingMembership);
-        });
+      const existingMembership = await checkUserInLeague(userId, leagueId);
+      setIsUserInLeague(!!existingMembership);
 
-        // Fetch the current number of players
-        getCurrentNumPlayers(leagueId).then((numPlayers) => {
-          setCurrentPlayers(numPlayers);
-        });
+      const numPlayers = await getCurrentNumPlayers(leagueId);
+      setCurrentPlayers(numPlayers);
 
-        const creatorId = details.get('CreatorID');
-        if (creatorId) {
-          getUserDetails(creatorId).then((user) => {
-            setCreator(user);
-          });
-        }
+      const creatorId = details.get('CreatorID');
+      if (creatorId) {
+        const user = await getUserDetails(creatorId);
+        setCreator(user);
       }
-    });
+
+      const portfolios = await getLeaguePortfolios(leagueId);
+      setLeaguePortfolios(portfolios);
+    };
+
+    fetchData();
   }, [leagueId, userId]);
+
+  useEffect(() => {
+    // Fetch user names for all portfolios in the league
+    const fetchUserNames = async () => {
+      const names = {};
+      for (const portfolio of leaguePortfolios) {
+        const userId = portfolio.get('UserID');
+        const user = await getUserDetails(userId);
+        names[userId] = user.get('displayName');
+      }
+      setUserNames(names);
+    };
+
+    if (leaguePortfolios.length > 0) {
+      fetchUserNames();
+    }
+  }, [leaguePortfolios]);
 
   const handleJoinButtonClick = async () => {
     try {
@@ -89,6 +108,10 @@ const LeagueDetails = () => {
       // Create a new portfolio associated with the joined league
       await createNewPortfolio(userId, leagueId, leagueDetails.get('StartingAmount'), portfolioName);
 
+      // Fetch updated league portfolios
+      const updatedPortfolios = await getLeaguePortfolios(leagueId);
+      setLeaguePortfolios(updatedPortfolios);
+
       console.log('User added to the league successfully and a new portfolio created');
     } catch (error) {
       console.error('Error joining the league', error);
@@ -106,11 +129,11 @@ const LeagueDetails = () => {
       <p>Starting Amount: {leagueDetails.get('StartingAmount')}</p>
       <p>Current Players: {currentPlayers}</p>
       <p>Max Players: {leagueDetails.get('NumPlayers')}</p>
-  
+
       {creator && (
         <p>Created by: {creator.get('displayName')}</p>
       )}
-  
+
       {isUserInLeague ? (
         <p>{joinMessage || 'You are already in this league.'}</p>
       ) : (
@@ -128,7 +151,23 @@ const LeagueDetails = () => {
           )}
         </>
       )}
-      {/* Display other league details */}
+
+      {/* Display league portfolios */}
+      <h3>League Portfolios:</h3>
+      <ul>
+        {leaguePortfolios.map((portfolio) => (
+          <li key={portfolio.id}>
+            {/* Display relevant portfolio information */}
+            Portfolio Name:{' '}
+            <Link to={`/portfolio/${encodeURIComponent(portfolio.get('PortfolioName'))}/${portfolio.id}`}>
+              {portfolio.get('PortfolioName')}
+            </Link>
+            , UserName: {userNames[portfolio.get('UserID')]}
+          </li>
+        ))}
+      </ul>
+
+      {/* Other league details */}
     </div>
   );
 };
