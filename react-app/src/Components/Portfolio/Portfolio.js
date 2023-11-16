@@ -32,9 +32,6 @@ export default function Portfolio() {
         const fetchPortfolioPositions = async () => {
             try {
                 const positions = await getPortfolioPositions(portfolio_id);
-                // const priceUpdatedPositions = await Promise.all(positions.map(async (position) => {
-                //     return await updateStockPrice(position.id);
-                // }));
                 setPositions(positions);
             } catch (error) {
                 console.error('Error fetching portfolio positions:', error);
@@ -43,19 +40,6 @@ export default function Portfolio() {
         fetchPortfolioData();
         fetchPortfolioPositions();
     }, [portfolio_id, navigate, user_id]);
-
-    useEffect(() => {
-        if (positions.length > 0){
-            console.log('Updated Positions:', positions);
-            updatePortfolioCurrentValue(portfolio_id)
-                .then((curr_val) => {
-                    setCurrentValue(curr_val.toFixed(2));
-                })
-                .catch((error) => {
-                    console.error('Error updating portfolio current value:', error);
-                });
-        }   
-    }, [positions, portfolio_id]);
 
     const onClick = (e) => {
         e.preventDefault();
@@ -79,7 +63,6 @@ export default function Portfolio() {
             <PortfolioPage 
                 portfolio={portfolio}
                 positions={positions}
-                val={currentValue} 
             />
             <SearchStocks
                 handleSearchTermChange={handleSearchInputChange}

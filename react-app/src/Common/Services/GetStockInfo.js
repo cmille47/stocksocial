@@ -6,7 +6,6 @@ export const getAllStocks = async () => {
 
   try {
     const response = await axios.get(url);
-    console.log('Data:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error:', error);
@@ -20,6 +19,7 @@ export const getAStock = async (query) => {
     try {
         const response = await axios.get(url);
         console.log('Data:', response.data);
+        return response.data;
     } catch (error) {
         console.error('Error:', error);
     }

@@ -16,7 +16,7 @@ export const updatePortfolioCurrentValue = async (portfolioID) => {
     try {
         const portfolio = await query2.get(portfolioID);
         curr_val += portfolio.get('RemainingCash');
-        portfolio.set('CurrentValue', curr_val);
+        portfolio.set('currentValue', curr_val);
         await portfolio.save();
         return curr_val;
     } catch (error) {

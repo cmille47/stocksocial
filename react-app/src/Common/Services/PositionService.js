@@ -1,4 +1,5 @@
 import Parse from 'parse';
+import { getAllStocks } from './GetStockInfo';
 
 export const getPortfolioPositions = async (portfolioID) => {
     const Position = Parse.Object.extend('Position');
@@ -8,27 +9,21 @@ export const getPortfolioPositions = async (portfolioID) => {
     return results;
 };
 
-// due to API constaints, this will fake
-// a stocks price for each position a user has
-// this usage would mirror unlimited API calls if we had them
-export const updateStockPrice = async (positionID) => {
-    const PositionObject = Parse.Object.extend('Position');
-    const query = new Parse.Query(PositionObject);
+export const updatePortfolioPositions = async (portfolioID) => {
+    const Position = Parse.Object.extend('Position');
+    const query = new Parse.Query(Position);
+    query.equalTo('PortfolioID', portfolioID);
+    const results = await query.find();
 
-    try {
-        const Position = await query.get(positionID);
+    const stockData = await getAllStocks();
 
-        // get random 'new price'
-        const past_price = Position.get('EndPrice'); 
-        const new_price = past_price + (Math.random() - 0.5) * past_price;
-
-        Position.set('EndPrice', new_price);
-        await Position.save();
-        console.log('New Position Price Set', Position);
-
-        return Position;
-    } catch (error) {
-        console.error('Error while setting new position price', error);
-        throw error;
-    }
-}
+    results.forEach((position) => {
+        const stock = stockData.find((stock) => stock.symbol === position.get('stockTicker'));
+        if (stock) {
+            position.set('EndPrice', stock.price);
+            position.save();
+        } else {
+            console.error(`Error: No stock found for ${position.get('stockTicker')}`);
+        }
+    });
+};
