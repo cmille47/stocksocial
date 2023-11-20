@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PortfolioPage from './PortfolioPage.js';
-import { getPortfolio, updatePortfolioCurrentValue } from '../../Common/Services/PortolioService';
+import { getPortfolio, updatePortfolioCurrentValue } from '../../Common/Services/PortfolioService';
 import { getPortfolioPositions, updateStockPrice } from '../../Common/Services/PositionService';
 import {searchForStock} from '../../Common/Services/StockService';
 import SearchStocks from './SearchStocks.js';

@@ -14,7 +14,32 @@ export const getAllUserPortfolios = async (userID) => {
     }
 };
 
-// gets users portolio for a specific league
+export const updatePortfolioCurrentValue = async (portfolioID) => {
+    const Position = Parse.Object.extend('Position');
+    const query = new Parse.Query(Position);
+    query.equalTo('PortfolioID', portfolioID);
+    const results = await query.find();
+
+    let curr_val = 0;
+    results.forEach((position) => {
+        curr_val += position.get('EndPrice') * position.get('Shares');
+    });
+
+    const Portfolio = Parse.Object.extend('Portfolio');
+    const query2 = new Parse.Query(Portfolio);
+    try {
+        const portfolio = await query2.get(portfolioID);
+        curr_val += portfolio.get('RemainingCash');
+        portfolio.set('currentValue', curr_val);
+        await portfolio.save();
+        return curr_val;
+    } catch (error) {
+        console.error('Error updating portfolio current value', error);
+        throw error;
+    }
+};
+
+// gets users portfolio for a specific league
 export const getUserLeaguePortfolio = async (userID, leagueID) => {
     const Portfolio = Parse.Object.extend('Portfolio');
     const query = new Parse.Query(Portfolio);
@@ -72,9 +97,7 @@ export const getAllUserPortfoliosWithLeagueNames = async (userID) => {
         console.error('Error fetching user portfolios with league names', error);
         throw error;
     }
-};
-
-
+}; 
 
 
 export const createNewPortfolio = async (userId, leagueId, startingAmount, portfolioName) => {
