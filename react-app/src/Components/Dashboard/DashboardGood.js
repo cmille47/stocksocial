@@ -5,6 +5,9 @@ import { updatePortfolioPositions } from '../../Common/Services/PositionService'
 import { useAPIFlag } from '../../APIContext';
 import { searchLeaguesByName, getLeagueByName } from '../../Common/Services/LeagueService';
 import '../../Styles/DashboardGood.css';
+import { useNavigate } from 'react-router-dom';
+import LogoutButton from '../Logout/LogoutButton'; 
+
 
 const DashboardGood = () => {
     const {useAPI} = useAPIFlag(); // UPDATE AS NEEDED IN APIContext.js
@@ -62,8 +65,8 @@ const DashboardGood = () => {
     return (
         <div>
             <section>
+                <LogoutButton /> {/* Include the LogoutButton component here */}
                 <h1>Welcome to the Dashboard component: {user.displayName}</h1>
-                
                 
                 <Link to="/create-league">
                     <button>Create League</button>
@@ -109,10 +112,6 @@ const DashboardGood = () => {
                         </ul>
                     )}
                 </div>
-
-
-
-
             </section>
         </div>
     );
