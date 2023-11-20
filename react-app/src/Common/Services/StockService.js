@@ -1,5 +1,25 @@
 import Parse from 'parse';
 
+export const searchForStock = async (term) => {
+    const Stock = Parse.Object.extend('Stock');
+    const query1 = new Parse.Query(Stock);
+    const query2 = new Parse.Query(Stock);
+
+    query1.startsWith('ticker', term.toUpperCase());
+    query2.startsWith('name', term.replace(/\b\w/g, (match) => match.toUpperCase()));
+
+    const mainQuery = Parse.Query.or(query1, query2);
+
+    try {
+        const results = await mainQuery.find();
+        console.log(results)
+        return results;
+    } catch (error) {
+        console.error('Error searching for stock:', error);
+        throw error;
+    }
+};
+
 // store stock names and ticker for rapid lookup
 // and use for API calls
 export const createStock = (ticker, name) => {
