@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { getAllUserPortfoliosWithLeagueNames } from '../../Common/Services/PortfolioService';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { getAllUserPortfolios, updatePortfolioCurrentValue, getAllUserPortfoliosWithLeagueNames } from '../../Common/Services/PortolioService';
+import { updatePortfolioPositions } from '../../Common/Services/PositionService';
+import { useAPIFlag } from '../../APIContext';
 import { searchLeaguesByName, getLeagueByName } from '../../Common/Services/LeagueService';
 import '../../Styles/DashboardGood.css';
-import { useNavigate } from 'react-router-dom';
 
 const DashboardGood = () => {
+    const {useAPI} = useAPIFlag(); // UPDATE AS NEEDED IN APIContext.js
     const user = JSON.parse(localStorage.getItem('user'));
     const userID = user.objectId;
     const [portfolios, setPortfolios] = useState([]);
@@ -35,6 +37,15 @@ const DashboardGood = () => {
         });
     }, [userID]);
 
+    useEffect(() => { 
+        if ((portfolios.length > 0) && (useAPI)) {
+            portfolios.forEach((portfolio) => {
+                updatePortfolioPositions(portfolio.id)
+                updatePortfolioCurrentValue(portfolio.id);
+            });
+        }
+    }, [portfolios]);
+  
     const handleLeagueNameClick = async (leagueName) => {
         try {
             const league = await getLeagueByName(leagueName);
@@ -47,7 +58,7 @@ const DashboardGood = () => {
             console.error('Error fetching league by name', error);
         }
     };
-
+  
     return (
         <div>
             <section>

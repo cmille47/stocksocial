@@ -1,24 +1,20 @@
-const PortfolioPage = ({ portfolio, positions }) => {
+const PortfolioPage = ({ portfolio, positions}) => {
     return (
         <div>
             {(portfolio) &&
                 <div>
                     <h2> Portfolio Name: {portfolio.get("PortfolioName")} </h2>
-                    <h2> Starting Amount: {portfolio.get("StartingAmount")} </h2>
-                    <h2> Remaining Cash: {portfolio.get("RemainingCash")} </h2>
-                    
+                    <h2> Current Value: {"$" + portfolio.get("currentValue")} </h2>
+                    <h2> Cash: {"$" + portfolio.get("RemainingCash")} </h2>
                 </div>
             }
             <h2> Positions: </h2>
-            {/* Still working on getting stock data using api for this part but loading in and retrieving of all data is working */}
-            IN PROGRESS
             {positions.length > 0 && (
                 <ul>
                     {positions.map((position) => (
                         <li key={position.id}>
-                            {/* May want to change positions to record both stock name and ticker instead of the stockID thing */}
                             <a href={`/Position/${encodeURIComponent(position.get('StockID'))}/${position.id}`}>
-                                {position.get('StockID')}
+                                {position.get('stockName') + " " + position.get('stockTicker') + ", current value: $" + (position.get('EndPrice') * position.get('Shares')).toFixed(2)}
                             </a>
                         </li>
                     ))}
