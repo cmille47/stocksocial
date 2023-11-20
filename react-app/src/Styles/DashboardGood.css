@@ -1,0 +1,18 @@
+/* DashboardGood.css */
+
+.search-container {
+    max-width: 400px; /* Adjust the maximum width as needed */
+    margin: 0 auto; /* Center the container */
+  }
+  
+  .search-bar {
+    /* ... other styles */
+    width: 100%; /* Make the input span the entire container */
+  }
+  
+  .matching-leagues-list {
+    /* ... other styles */
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  

@@ -18,7 +18,7 @@ const NewLeagueForm = ({ formData, handleInput, handleSubmit }) => {
         <input
           type="number"
           name="startingAmount"
-          value={formData.StartingAmount}
+          value={formData.startingAmount}
           onChange={handleInput}
         />
       </label>
@@ -29,6 +29,16 @@ const NewLeagueForm = ({ formData, handleInput, handleSubmit }) => {
           type="number"
           name="numPlayers"
           value={formData.numPlayers}
+          onChange={handleInput}
+        />
+      </label>
+      <br />
+      <label>
+        Your Portfolio Name:
+        <input
+          type="text"
+          name="portfolioName"
+          value={formData.portfolioName}
           onChange={handleInput}
         />
       </label>

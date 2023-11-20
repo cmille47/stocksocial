@@ -1,17 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { getAllUserPortfolios, updatePortfolioCurrentValue } from '../../Common/Services/PortolioService';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { getAllUserPortfolios, updatePortfolioCurrentValue, getAllUserPortfoliosWithLeagueNames } from '../../Common/Services/PortolioService';
 import { updatePortfolioPositions } from '../../Common/Services/PositionService';
 import { useAPIFlag } from '../../APIContext';
+import { searchLeaguesByName, getLeagueByName } from '../../Common/Services/LeagueService';
+import '../../Styles/DashboardGood.css';
 
 const DashboardGood = () => {
     const {useAPI} = useAPIFlag(); // UPDATE AS NEEDED IN APIContext.js
     const user = JSON.parse(localStorage.getItem('user'));
     const userID = user.objectId;
     const [portfolios, setPortfolios] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [matchingLeagues, setMatchingLeagues] = useState([]);
+    const navigate = useNavigate();
+
+    const handleSearchInputChange = (e) => {
+        const term = e.target.value;
+        setSearchTerm(term);
+        fetchMatchingLeagues(term);
+    };
+
+    const fetchMatchingLeagues = async (term) => {
+        try {
+            const matchingLeagues = await searchLeaguesByName(term);
+            setMatchingLeagues(matchingLeagues);
+        } catch (error) {
+            console.error('Error fetching matching leagues', error);
+        }
+    };
 
     useEffect(() => {
-        getAllUserPortfolios(userID).then((portfolios) => {
+        // Fetch user portfolios with their league names
+        getAllUserPortfoliosWithLeagueNames(userID).then((portfolios) => {
             setPortfolios(portfolios);
         });
     }, [userID]);
@@ -24,11 +45,26 @@ const DashboardGood = () => {
             });
         }
     }, [portfolios]);
-
+  
+    const handleLeagueNameClick = async (leagueName) => {
+        try {
+            const league = await getLeagueByName(leagueName);
+            if (league) {
+                navigate(`/league/${league.id}`);
+            } else {
+                console.log('League not found');
+            }
+        } catch (error) {
+            console.error('Error fetching league by name', error);
+        }
+    };
+  
     return (
         <div>
             <section>
                 <h1>Welcome to the Dashboard component: {user.displayName}</h1>
+                
+                
                 <Link to="/create-league">
                     <button>Create League</button>
                 </Link>
@@ -38,13 +74,45 @@ const DashboardGood = () => {
                     <ul>
                         {portfolios.map((portfolio) => (
                             <li key={portfolio.id}>
-                                <a href={`/Portfolio/${encodeURIComponent(portfolio.get("PortfolioName"))}/${portfolio.id}`}>
-                                    {portfolio.get("PortfolioName")}
-                                </a>
+                                <Link to={`/Portfolio/${encodeURIComponent(portfolio.PortfolioName)}/${portfolio.id}`}>
+                                    {portfolio.PortfolioName}
+                                </Link>
+                                - 
+                                <span
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => handleLeagueNameClick(portfolio.leagueName)}
+                                >
+                                    {portfolio.leagueName}
+                                </span>
                             </li>
                         ))}
                     </ul>
                 )}
+                
+                <div className="search-container">
+                    <input
+                        type="text"
+                        placeholder="Search for leagues..."
+                        value={searchTerm}
+                        onChange={handleSearchInputChange}
+                        className="search-bar"
+                    />
+                    {matchingLeagues.length > 0 && (
+                        <ul className="matching-leagues-list">
+                            {matchingLeagues.map((league) => (
+                                <li key={league.id}>
+                                    <Link to={`/league/${league.id}`}>
+                                        {league.get('LeagueName')}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+
+
+
+
             </section>
         </div>
     );
