@@ -1,76 +1,123 @@
-// LeagueDetails.js
+// Inside LeagueDetails.js
 
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import Parse from 'parse'; // Import Parse
-import { getLeague } from '../../Common/Services/LeagueService';
-import { addUserToLeague } from '../../Common/Services/LeagueService';
-import { checkUserInLeague } from '../../Common/Services/LeagueService';
+import { useParams, Link } from 'react-router-dom';
+import { getLeague, checkUserInLeague, addUserToLeague } from '../../Common/Services/LeagueService';
+import { createNewPortfolio, getLeaguePortfolios } from '../../Common/Services/PortfolioService';
+import { getUserDetails } from '../../Common/Services/AuthService';
+import { getCurrentNumPlayers } from '../../Common/Services/LeagueService';
 
 const LeagueDetails = () => {
   const { leagueId } = useParams();
   const [leagueDetails, setLeagueDetails] = useState(null);
-  const [isUserInLeague, setIsUserInLeague] = useState(false); // State to track if the user is already in the league
+  const [isUserInLeague, setIsUserInLeague] = useState(false);
+  const [isLeagueFull, setIsLeagueFull] = useState(false);
+  const [joinMessage, setJoinMessage] = useState('');
+  const [creator, setCreator] = useState(null); // State to hold the creator's details
+  const [currentPlayers, setCurrentPlayers] = useState(0);
+  const [leaguePortfolios, setLeaguePortfolios] = useState([]); // State to store league portfolios
+  const [userNames, setUserNames] = useState({}); // State to store user names based on UserID
 
-  // Assume you have the user ID stored in your component's state or context
-  const userId = '123456789'; // Replace this with the actual user ID
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userId = user.objectId;
 
   useEffect(() => {
-    // Fetch league details based on the leagueId
-    getLeague(leagueId).then((details) => {
+    // Fetch league details, user membership, and portfolios when the component mounts
+    const fetchData = async () => {
+      const details = await getLeague(leagueId);
       setLeagueDetails(details);
 
-      // Check if the user is already in the league
-      const LeagueMembership = Parse.Object.extend('LeagueMembership');
-      const membershipQuery = new Parse.Query(LeagueMembership);
-      membershipQuery.equalTo('userId', userId);
-      membershipQuery.equalTo('leagueId', leagueId);
+      const existingMembership = await checkUserInLeague(userId, leagueId);
+      setIsUserInLeague(!!existingMembership);
 
-      membershipQuery.first().then((existingMembership) => {
-        setIsUserInLeague(!!existingMembership);
-      });
-    });
+      const numPlayers = await getCurrentNumPlayers(leagueId);
+      setCurrentPlayers(numPlayers);
+
+      const creatorId = details.get('CreatorID');
+      if (creatorId) {
+        const user = await getUserDetails(creatorId);
+        setCreator(user);
+      }
+
+      const portfolios = await getLeaguePortfolios(leagueId);
+      setLeaguePortfolios(portfolios);
+    };
+
+    fetchData();
   }, [leagueId, userId]);
 
-  // LeagueDetails.js
+  useEffect(() => {
+    // Fetch user names for all portfolios in the league
+    const fetchUserNames = async () => {
+      const names = {};
+      for (const portfolio of leaguePortfolios) {
+        const userId = portfolio.get('UserID');
+        const user = await getUserDetails(userId);
+        names[userId] = user.get('displayName');
+      }
+      setUserNames(names);
+    };
 
-const handleJoinButtonClick = async () => {
+    if (leaguePortfolios.length > 0) {
+      fetchUserNames();
+    }
+  }, [leaguePortfolios]);
+
+  const handleJoinButtonClick = async () => {
     try {
-      // Fetch the current league details
-      const leagueDetails = await getLeague(leagueId);
-  
-      // Check if there is room to join (current players < max players)
-      const currentPlayers = leagueDetails.get('CurrentPlayers');
-      const maxPlayers = leagueDetails.get('MaxPlayers');
-  
-      if (currentPlayers >= maxPlayers) {
-        console.log('The league is full. Cannot join.');
-        // You can show a message to the user indicating that the league is full.
+      const portfolioNameInput = document.getElementById('portfolioName');
+      const portfolioName = portfolioNameInput.value;
+
+      if (!portfolioName) {
+        console.log('Please enter a portfolio name.');
         return;
       }
-  
+
+      // Fetch the current league details
+      const leagueDetails = await getLeague(leagueId);
+
       // Check if the user is already in the league
       const existingMembership = await checkUserInLeague(userId, leagueId);
-  
+
       if (existingMembership) {
         // User is already in the league
         console.log('User is already in the league');
+        setIsUserInLeague(true);
         return;
       }
-  
+
+      // Check if there is room to join (current players < max players)
+      const maxPlayers = leagueDetails.get('NumPlayers');
+
+      if (currentPlayers >= maxPlayers) {
+        console.log('The league is full. Cannot join.');
+        setIsLeagueFull(true);
+        return;
+      }
+
       // If there is room and the user is not already in the league, join the league
       await addUserToLeague(userId, leagueId);
-  
+
       // Update the state to reflect that the user is now in the league
       setIsUserInLeague(true);
-  
-      console.log('User added to the league successfully');
+      setJoinMessage('You are now in the league!');
+
+      // Increment the currentPlayers state
+      setCurrentPlayers(currentPlayers + 1);
+
+      // Create a new portfolio associated with the joined league
+      await createNewPortfolio(userId, leagueId, leagueDetails.get('StartingAmount'), portfolioName);
+
+      // Fetch updated league portfolios
+      const updatedPortfolios = await getLeaguePortfolios(leagueId);
+      setLeaguePortfolios(updatedPortfolios);
+
+      console.log('User added to the league successfully and a new portfolio created');
     } catch (error) {
       console.error('Error joining the league', error);
       // Handle the error, such as showing an error message to the user.
     }
   };
-  
 
   if (!leagueDetails) {
     return <div>Loading...</div>;
@@ -80,14 +127,47 @@ const handleJoinButtonClick = async () => {
     <div>
       <h2>{leagueDetails.get('LeagueName')} Details</h2>
       <p>Starting Amount: {leagueDetails.get('StartingAmount')}</p>
-      <p>Number of Players: {leagueDetails.get('NumPlayers')}</p>
-      
-      {isUserInLeague ? (
-        <p>You are already in this league.</p>
-      ) : (
-        <button onClick={handleJoinButtonClick}>Join</button>
+      <p>Current Players: {currentPlayers}</p>
+      <p>Max Players: {leagueDetails.get('NumPlayers')}</p>
+
+      {creator && (
+        <p>Created by: {creator.get('displayName')}</p>
       )}
-      {/* Display other league details */}
+
+      {isUserInLeague ? (
+        <p>{joinMessage || 'You are already in this league.'}</p>
+      ) : (
+        <>
+          {!isLeagueFull ? (
+            <>
+              <label>
+                Portfolio Name:
+                <input type="text" id="portfolioName" />
+              </label>
+              <button onClick={handleJoinButtonClick}>Join</button>
+            </>
+          ) : (
+            <p>This league is currently full. Cannot join.</p>
+          )}
+        </>
+      )}
+
+      {/* Display league portfolios */}
+      <h3>League Portfolios:</h3>
+      <ul>
+        {leaguePortfolios.map((portfolio) => (
+          <li key={portfolio.id}>
+            {/* Display relevant portfolio information */}
+            Portfolio Name:{' '}
+            <Link to={`/portfolio/${encodeURIComponent(portfolio.get('PortfolioName'))}/${portfolio.id}`}>
+              {portfolio.get('PortfolioName')}
+            </Link>
+            , UserName: {userNames[portfolio.get('UserID')]}
+          </li>
+        ))}
+      </ul>
+
+      {/* Other league details */}
     </div>
   );
 };

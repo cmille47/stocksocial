@@ -32,3 +32,16 @@ export const checkUser = () => {
     return Parse.User.current()?.authenticated;
 }
 
+
+export const getUserDetails = async (userId) => {
+    const query = new Parse.Query(Parse.User);
+    query.equalTo('objectId', userId);
+    try {
+        const user = await query.first();
+        return user;
+    } catch (error) {
+        console.error('Error fetching user details', error);
+        throw error;
+    }
+};
+

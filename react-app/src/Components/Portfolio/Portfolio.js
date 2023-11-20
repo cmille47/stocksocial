@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import PortfolioPage from './PortfolioPage.js';
-import { getPortfolio } from '../../Common/Services/PortolioService';
+import { getPortfolio } from '../../Common/Services/PortfolioService.js';
 import { getPortfolioPositions } from '../../Common/Services/PositionService';
 
 
