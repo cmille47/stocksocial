@@ -63,6 +63,7 @@ export const createLeague = async (leagueInfo, userId) => {
         if (result && result.id) {
             await createNewPortfolio(userId, result.id, leagueInfo.startingAmount, portfolioName);
             console.log('User added to the league upon creation');
+            await addUserToLeague(userId, result.id);
         } else {
             console.error('League creation failed');
         }
