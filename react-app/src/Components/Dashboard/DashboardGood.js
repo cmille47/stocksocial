@@ -6,8 +6,6 @@ import { updatePortfolioCurrentValue, getAllUserPortfoliosWithLeagueNames } from
 import { updatePortfolioPositions } from '../../Common/Services/PositionService';
 import { useAPIFlag } from '../../APIContext';
 import { searchLeaguesByName, getLeagueByName } from '../../Common/Services/LeagueService';
-import '../../Styles/DashboardGood.css';
-// import { useNavigate } from 'react-router-dom';
 import LogoutButton from '../Logout/LogoutButton'; 
 
 
