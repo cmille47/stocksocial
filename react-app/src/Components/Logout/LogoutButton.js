@@ -1,12 +1,10 @@
-/*
+
+// Inside LogoutButton.js
 // Inside LogoutButton.js
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../Common/Services/AuthService';
 
-const LogoutButton = () => {
-  const navigate = useNavigate();
-
+const LogoutButton = ({ navigate }) => {
   const handleLogout = async () => {
     await logoutUser();
     localStorage.clear();
@@ -14,15 +12,17 @@ const LogoutButton = () => {
   };
 
   return (
-    <span className="nav-link" onClick={handleLogout}>
+    <button onClick={handleLogout}>
       Logout
-    </span>
+    </button>
   );
 };
 
 export default LogoutButton;
-*/ 
 
+
+/*
+// OLD LOGOUT BUTTON WORKING
 
 // Inside LogoutButton.js
 
@@ -48,4 +48,4 @@ const LogoutButton = () => {
 
 export default LogoutButton;
 
-
+*/
