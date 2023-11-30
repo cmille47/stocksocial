@@ -21,7 +21,7 @@ Parse.serverURL = 'https://parseapi.back4app.com/';
 function App() {
   return (
     <div className="App">
-      <Navbar />
+      {/* <Navbar /> */}
       <Components />
     </div>
   );

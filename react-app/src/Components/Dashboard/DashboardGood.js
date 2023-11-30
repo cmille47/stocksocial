@@ -65,6 +65,7 @@ const DashboardGood = () => {
     return (
         <div>
             <section>
+                
                 <LogoutButton /> {/* Include the LogoutButton component here */}
                 <h1>Welcome to the Dashboard component: {user.displayName}</h1>
                 
