@@ -1,5 +1,5 @@
 import Parse from "parse";
-import { createNewPortfolio } from "./PortfolioService";
+import { createNewPortfolio, getLeaguePortfolios } from "./PortfolioService";
 
 
 export const getLeague = async (leagueID) => {
@@ -13,6 +13,32 @@ export const getLeague = async (leagueID) => {
         console.error("Error fetching league", error);
         throw error;
     }
+};
+
+export const getLeaderBoard = async (leagueID) => {
+  try {
+      // Get all portfolios in the league
+      const leaguePortfolios = await getLeaguePortfolios(leagueID);
+
+      if (leaguePortfolios.length === 0) {
+          return 0; // No portfolios in the league
+      }
+
+      // Sort portfolios based on current value in descending order
+      const sortedPortfolios = leaguePortfolios.sort((a, b) => {
+          const valueA = a.get('currentValue');
+          const valueB = b.get('currentValue');
+          return valueB - valueA;
+      });
+
+      // Get the top 3 portfolios or all portfolios if less than 3
+      const topPortfolios = sortedPortfolios.slice(0, Math.min(sortedPortfolios.length, 3));
+
+      return topPortfolios;
+  } catch (error) {
+      console.error('Error fetching leaderboard', error);
+      throw error;
+  }
 };
 
 /*

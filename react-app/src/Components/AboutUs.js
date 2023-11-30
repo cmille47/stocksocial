@@ -22,9 +22,9 @@ function AboutUs() {
             <div className="UScontainer">
               <h2>Mitchell Trossen</h2>
               <p className="UStitle">Student A</p>
-              <p>Some text that describes me, lorem ipsum ipsum lorem.</p>
+              <p>Mtrosse2 is from San Diego and at somepoint thats just his personality. He was much cooler with longer hair and hopes to return to that state one day.</p>
               <p>mtrosse2@nd.edu</p>
-              <p><button className="USbutton">Contact</button></p>
+              {/* <p><button className="USbutton">Contact</button></p> */}
             </div>
           </div>
         </div>
@@ -36,9 +36,9 @@ function AboutUs() {
             <div className="UScontainer">
               <h2>Christian Miller</h2>
               <p className="UStitle">Student B</p>
-              <p>just a cutie</p>
+              <p>Cmille47 is a fine gentleman from Ohio. He was been a coding protoge since the age of 8. He loves algs, boxing, and driving stick shift. Feel free to ask him about his beautiful jeep</p>
               <p>cmille47@nd.edu</p>
-              <p><button className="USbutton">Contact</button></p>
+              {/* <p><button className="USbutton">Contact</button></p> */}
             </div>
           </div>
         </div>
