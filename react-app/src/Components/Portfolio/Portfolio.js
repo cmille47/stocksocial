@@ -21,6 +21,10 @@ export default function Portfolio() {
             try {
                 const portfolioData = await getPortfolio(portfolio_id, user_id);
                 setPortfolio(portfolioData);
+                // Update the portfolio's current value
+                const updatedValue = await updatePortfolioCurrentValue(portfolio_id);
+                setCurrentValue(updatedValue);
+
             } catch (error) {
                 console.error('Error fetching portfolio:', error);
             }

@@ -5,7 +5,7 @@ import { useParams, Link } from 'react-router-dom';
 import { getLeague, checkUserInLeague, addUserToLeague } from '../../Common/Services/LeagueService';
 import { createNewPortfolio, getLeaguePortfolios } from '../../Common/Services/PortfolioService';
 import { getUserDetails } from '../../Common/Services/AuthService';
-import { getCurrentNumPlayers } from '../../Common/Services/LeagueService';
+import { getCurrentNumPlayers, getLeaderBoard } from '../../Common/Services/LeagueService'; // Import getLeaderBoard
 
 const LeagueDetails = () => {
   const { leagueId } = useParams();
@@ -17,6 +17,7 @@ const LeagueDetails = () => {
   const [currentPlayers, setCurrentPlayers] = useState(0);
   const [leaguePortfolios, setLeaguePortfolios] = useState([]); // State to store league portfolios
   const [userNames, setUserNames] = useState({}); // State to store user names based on UserID
+  const [topPortfolios, setTopPortfolios] = useState([]); // State to store top 3 portfolios
 
   const user = JSON.parse(localStorage.getItem('user'));
   const userId = user.objectId;
@@ -41,6 +42,10 @@ const LeagueDetails = () => {
 
       const portfolios = await getLeaguePortfolios(leagueId);
       setLeaguePortfolios(portfolios);
+
+      // Fetch top 3 portfolios in the league
+      const topPortfoliosData = await getLeaderBoard(leagueId);
+      setTopPortfolios(topPortfoliosData);
     };
 
     fetchData();
@@ -112,6 +117,10 @@ const LeagueDetails = () => {
       const updatedPortfolios = await getLeaguePortfolios(leagueId);
       setLeaguePortfolios(updatedPortfolios);
 
+      // Fetch updated top 3 portfolios in the league
+      const topPortfoliosData = await getLeaderBoard(leagueId);
+      setTopPortfolios(topPortfoliosData);
+
       console.log('User added to the league successfully and a new portfolio created');
     } catch (error) {
       console.error('Error joining the league', error);
@@ -163,6 +172,17 @@ const LeagueDetails = () => {
               {portfolio.get('PortfolioName')}
             </Link>
             , UserName: {userNames[portfolio.get('UserID')]}
+          </li>
+        ))}
+      </ul>
+
+      {/* Display top 3 portfolios */}
+      <h3>Top 3 Portfolios:</h3>
+      <ul>
+        {topPortfolios.map((portfolio) => (
+          <li key={portfolio.id}>
+            {/* Display relevant portfolio information */}
+            Portfolio Name: {portfolio.get('PortfolioName')}, Current Value: {portfolio.get('currentValue')}
           </li>
         ))}
       </ul>
