@@ -14,6 +14,28 @@ export const getAllUserPortfolios = async (userID) => {
     }
 };
 
+// update multiple attributes at once
+// each update is a tuple of (key, value)
+export const updatePortfolio = async (portfolioID, ...updates) => {
+    try{
+        const Portfolio = Parse.Object.extend('Portfolio');
+        const query = new Parse.Query(Portfolio);
+        const portfolio = await query.get(portfolioID);
+
+        updates.forEach((update) => {
+            const [key, value]  = update;
+            portfolio.set(key, value);
+        });
+
+        const updatedPortfolio = await portfolio.save();
+        return updatedPortfolio;
+    }
+    catch (error){
+        console.error('Error updating portfolio', error);
+        throw error;
+    }
+};
+
 export const updatePortfolioCurrentValue = async (portfolioID) => {
     const Position = Parse.Object.extend('Position');
     const query = new Parse.Query(Position);

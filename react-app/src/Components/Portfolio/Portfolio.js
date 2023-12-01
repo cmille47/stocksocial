@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PortfolioPage from './PortfolioPage.js';
-import { getPortfolio, updatePortfolioCurrentValue } from '../../Common/Services/PortfolioService';
-import { getPortfolioPositions, updateStockPrice } from '../../Common/Services/PositionService';
+import { getPortfolio } from '../../Common/Services/PortfolioService';
+import { getPortfolioPositions } from '../../Common/Services/PositionService';
 import {searchForStock} from '../../Common/Services/StockService';
 import SearchStocks from './SearchStocks.js';
 
@@ -13,7 +13,6 @@ export default function Portfolio() {
 
     const [portfolio, setPortfolio] = useState(null);
     const [positions, setPositions] = useState([]);
-    const [currentValue, setCurrentValue] = useState(0.00);
     const [matchingStocks, setMatchingStocks] = useState([]);
 
     // Fetch portfolio info and positions
@@ -24,8 +23,6 @@ export default function Portfolio() {
                 setPortfolio(portfolioData);
             } catch (error) {
                 console.error('Error fetching portfolio:', error);
-                alert("Invalid Page Requested");
-                navigate(-1);
             }
         };
 
@@ -43,7 +40,14 @@ export default function Portfolio() {
 
     const onClick = (e) => {
         e.preventDefault();
-        console.log(e.target);
+        const ticker = e.target.dataset.ticker;
+        const position_id = e.target.dataset.position;
+        if (position_id){
+            const position = positions.find((position) => position.id === position_id);
+            localStorage.setItem('position', JSON.stringify(position));
+        };
+        localStorage.setItem('portfolio', portfolio); 
+        navigate(`/position/${ticker}`);
     };
 
     const handleSearchInputChange = async (e) => {
@@ -63,10 +67,12 @@ export default function Portfolio() {
             <PortfolioPage 
                 portfolio={portfolio}
                 positions={positions}
+                onClick={onClick}
             />
             <SearchStocks
                 handleSearchTermChange={handleSearchInputChange}
                 matchingStocks={matchingStocks}
+                onClick={onClick}
             />
         </div>
     );

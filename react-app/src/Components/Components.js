@@ -1,8 +1,3 @@
-
-
-
-
-
 import React from "react";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import AuthLogin from "./Auth/AuthLogin.js";
@@ -12,6 +7,7 @@ import League from "./League/League.js";
 import AuthRegister from "./Auth/AuthRegister.js";
 import ProtectedRoute from "../Common/Services/ProtectedRoute.js";
 import LeagueDetails from "./League/LeagueDetails.js";
+import Position from "./Position/Position.js";
 
 const Components = () => {
     return (
@@ -24,6 +20,7 @@ const Components = () => {
                 <Route path="/create-league" element={<ProtectedRoute element={League} />} />
                 <Route path="*" element = {<h1>404 Not Found</h1>} />
                 <Route path="/league/:leagueId" element={<LeagueDetails />} />
+                <Route path="/position/:stockName" element={<ProtectedRoute element={Position} />} />
             </Routes>
         </Router>
     );
