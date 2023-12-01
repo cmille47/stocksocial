@@ -6,7 +6,7 @@ import { updatePortfolioCurrentValue, getAllUserPortfoliosWithLeagueNames } from
 import { updatePortfolioPositions } from '../../Common/Services/PositionService';
 import { useAPIFlag } from '../../APIContext';
 import { searchLeaguesByName, getLeagueByName } from '../../Common/Services/LeagueService';
-import LogoutButton from '../Logout/LogoutButton'; 
+
 
 
 const DashboardGood = () => {
@@ -66,7 +66,7 @@ const DashboardGood = () => {
         <div>
             <section>
                 
-                <LogoutButton /> {/* Include the LogoutButton component here */}
+                {/* <LogoutButton /> Include the LogoutButton component here */}
                 <h1>Welcome to the Dashboard component: {user.displayName}</h1>
                 
                 <Link to="/create-league">

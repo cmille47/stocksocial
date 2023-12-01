@@ -9,7 +9,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import './App.css';
 import Parse from 'parse';
 import Components from "./Components/Components.js"
-import Navbar from './Components/NavBar/NavBar';
+
 Parse.initialize(
   "CFFw5eAHjZZTRjyaBeNL5d3gPcCsMvuBABU8ihJ9", //APP_ID
   "qNxy0Yirqeh2M1XBicNvxKV9TcR3swF80PXyk9B1", // JAVASCRIPT_KEY
