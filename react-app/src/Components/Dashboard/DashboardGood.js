@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { updatePortfolioCurrentValue, getAllUserPortfoliosWithLeagueNames } from '../../Common/Services/PortfolioService';
 // import { useParams } from 'react-router-dom';
 import { updatePortfolioCurrentValue, getAllUserPortfoliosWithLeagueNames } from '../../Common/Services/PortfolioService';
-// import { getAllUserPortfolios, } from '../../Common/Services/PortfolioService';
 import { updatePortfolioPositions } from '../../Common/Services/PositionService';
 import { useAPIFlag } from '../../APIContext';
 import { searchLeaguesByName, getLeagueByName } from '../../Common/Services/LeagueService';
@@ -47,7 +47,7 @@ const DashboardGood = () => {
                 updatePortfolioCurrentValue(portfolio.id);
             });
         }
-    }, [portfolios]);
+    }, [portfolios, useAPI]);
   
     const handleLeagueNameClick = async (leagueName) => {
         try {

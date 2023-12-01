@@ -1,4 +1,4 @@
-const SearchPositions = ({ handleSearchTermChange, matchingStocks }) => {
+const SearchPositions = ({ handleSearchTermChange, matchingStocks, onClick }) => {
     return (
         <div className="search-container">
             <input
@@ -10,7 +10,10 @@ const SearchPositions = ({ handleSearchTermChange, matchingStocks }) => {
             {matchingStocks.length > 0 && (
                 <ul className="matching-stocks-list">
                     {matchingStocks.slice(0,10).map((stock) => (
-                        <li key={stock.id}>
+                        <li key={stock.id} 
+                            data-ticker={stock.get('ticker')}
+                            onClick={onClick}
+                        >
                             {stock.get('ticker')},  {stock.get('name')}
                         </li>
                     ))}

@@ -1,4 +1,4 @@
-const PortfolioPage = ({ portfolio, positions}) => {
+const PortfolioPage = ({ portfolio, positions, onClick}) => {
     return (
         <div>
             {(portfolio) &&
@@ -12,10 +12,12 @@ const PortfolioPage = ({ portfolio, positions}) => {
             {positions.length > 0 && (
                 <ul>
                     {positions.map((position) => (
-                        <li key={position.id}>
-                            <a href={`/Position/${encodeURIComponent(position.get('StockID'))}/${position.id}`}>
-                                {position.get('stockName') + " " + position.get('stockTicker') + ", current value: $" + (position.get('EndPrice') * position.get('Shares')).toFixed(2)}
-                            </a>
+                        <li key={position.id} 
+                            data-ticker={position.get('stockTicker')} 
+                            data-position={position.id}
+                            onClick={onClick}
+                        >
+                            {position.get('stockName') + " " + position.get('stockTicker') + ", current value: $" + (position.get('EndPrice') * position.get('Shares')).toFixed(2)}
                         </li>
                     ))}
                 </ul>
