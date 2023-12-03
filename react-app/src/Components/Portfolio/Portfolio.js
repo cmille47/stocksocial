@@ -10,11 +10,14 @@ export default function Portfolio() {
     const navigate = useNavigate();
     const { portfolio_id } = useParams();
     const user_id = JSON.parse(localStorage.getItem('user')).objectId;
-
     const [portfolio, setPortfolio] = useState(null);
     const [positions, setPositions] = useState([]);
     const [matchingStocks, setMatchingStocks] = useState([]);
 
+    // make sure these are reset 
+    localStorage.removeItem('position');
+    localStorage.removeItem('portfolio'); 
+    
     // Fetch portfolio info and positions
     useEffect(() => {
         const fetchPortfolioData = async () => {

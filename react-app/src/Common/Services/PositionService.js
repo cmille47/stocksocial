@@ -34,6 +34,18 @@ export const updatePosition = async (position_id, updates) => {
     }
 };
 
+export const createPosition = async (portfolioID, stockName, stockTicker, shares, startPrice, endPrice) => {
+    const Position = Parse.Object.extend('Position');
+    const position = new Position();
+    position.set('PortfolioID', portfolioID);
+    position.set('stockName', stockName);
+    position.set('stockTicker', stockTicker);
+    position.set('Shares', Number(shares));
+    position.set('StartPrice', startPrice);
+    position.set('EndPrice', endPrice);
+    return await position.save();
+};
+
 export const getPortfolioPositions = async (portfolioID) => {
     const Position = Parse.Object.extend('Position');
     const query = new Parse.Query(Position);
