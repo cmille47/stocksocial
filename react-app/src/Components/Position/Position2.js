@@ -5,18 +5,23 @@ import Chart from "./Chart";
 import Header from "./Header";
 import { fetchStockDetails, fetchQuote } from "../../Common/Services/GetStockInfo";
 import {useNavigate, useParams} from 'react-router-dom';
+import { updatePosition } from "../../Common/Services/PositionService";
+import SaleButton from "./SaleButton";
+import { updatePortfolio } from "../../Common/Services/PortfolioService";
+
 
 const Position2 = () => {
   const { stockSymbol } = useParams();
   const [stockDetails, setStockDetails] = useState({});
   const [quote, setQuote] = useState({});
   const navigate = useNavigate();
-  const position = JSON.parse(localStorage.getItem('position'));
-  const portfolio = JSON.parse(localStorage.getItem('portfolio'));
+  let position = JSON.parse(localStorage.getItem('position'));
+  let portfolio = JSON.parse(localStorage.getItem('portfolio'));
+  const [currentValue, setCurrentValue] = useState(null);
 
   useEffect(() => {
     if (!portfolio){
-      navigate('/dashboard'); // go to dashboard if no portfolio (hard coded in)
+      navigate('/dashboard'); // go to dashboard if no portfolio (url typed in)
     }
   }, [navigate, portfolio]);
 
@@ -45,6 +50,41 @@ const Position2 = () => {
     updateStockOverview();
   }, [stockSymbol]);
 
+  useEffect(() => {
+    const updateCurrentValue = async () => {
+      if (quote && position){
+        const updated_position = await updatePosition(position.objectId, [{key: 'EndPrice', value: quote.pc}]);
+        position = updated_position.toJSON();
+        const curr = (position.EndPrice * position.Shares).toFixed(2);
+        setCurrentValue(curr);
+      };
+    };
+    updateCurrentValue();
+  }, [quote, position]);
+
+  const handleSale = async (inputvalue, type) => {
+    console.log(inputvalue, type);
+    if (type === 'sell'){
+      const SellDate = new Date();
+      const netProfit = await position.Shares * (quote.pc - position.StartPrice);
+      const newCash = await portfolio.RemainingCash + netProfit;
+
+      const positionUpdates = [
+        {key: 'DateSold', value: SellDate},
+        {key: 'NetProfit', value: netProfit}
+      ];
+
+      const portfolioUpdates = [
+        {key: 'RemainingCash', value: newCash}
+      ];
+      position = (await updatePosition(position.objectId, positionUpdates)).toJSON();
+      portfolio = (await updatePortfolio (portfolio.objectId, portfolioUpdates)).toJSON();
+    }
+    else if (type === 'buy'){
+
+    }
+  }
+
   return (
     <div
       className="h-screen grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-rows-8 md:grid-rows-7 xl:grid-rows-5 auto-rows-fr gap-6 p-10 font-quicksand bg-gray-900 text-gray-300"
@@ -64,12 +104,16 @@ const Position2 = () => {
           position={position}
         />
       </div>
-      <div className="row-span-2 xl:row-span-3">
+      <div className="row-span-2">
         <Details details={stockDetails} />
       </div>
-      {/* <div className="row-span-2 xl:row-span-3">
-        <Details details={stockDetails} />
-      </div> */}
+      <div classame="row-span-1">
+        <SaleButton 
+          position={position}
+          currentValue={currentValue}
+          handleSale = {handleSale}
+        />
+      </div>
     </div>
   );
 };

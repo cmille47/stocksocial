@@ -14,6 +14,26 @@ export const getPosition = async (positionID) => {
     }
 };
 
+// update multiple attributes at once
+// each update is a tuple of (key, value)
+export const updatePosition = async (position_id, updates) => {
+    const Position = Parse.Object.extend('Position');
+    const query = new Parse.Query(Position);
+    query.equalTo('objectId', position_id);
+    const position = await query.first();
+    try{
+        updates.forEach((update) => {
+            const {key, value} = update;
+            position.set(key, value);
+        });
+        return await position.save();
+    }
+    catch (error){
+        console.error('Error updating portfolio', error);
+        throw error;
+    }
+};
+
 export const getPortfolioPositions = async (portfolioID) => {
     const Position = Parse.Object.extend('Position');
     const query = new Parse.Query(Position);
