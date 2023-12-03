@@ -9,7 +9,6 @@ import {
     ReferenceArea,
     Tooltip,
 } from "recharts";
-import ThemeContext from "../../Context/ThemeContext";
 import { getDailyChartData } from "../../Common/Services/GetStockInfo";
 import { useParams } from "react-router-dom";
 import { useAPIFlag } from '../../Context/APIContext';
@@ -29,7 +28,6 @@ const mockData = [
 
 
 const Chart = () => {
-    const { darkMode } = useContext(ThemeContext);
     const { stockSymbol } = useParams();
     const {useAPI} = useAPIFlag();
     const [data, setData] = useState([]);
@@ -67,19 +65,19 @@ const Chart = () => {
                         <linearGradient id="chartColor" x1="0" y1="0" x2="0" y2="1">
                             <stop
                                 offset="5%"
-                                stopColor={darkMode ? "#312e81" : "rgb(199 210 254)"}
+                                stopColor="#312e81"
                                 stopOpacity={0.8}
                             />
                             <stop
                                 offset="95%"
-                                stopColor={darkMode ? "#312e81" : "rgb(199 210 254)"}
+                                stopColor="#312e81"
                                 stopOpacity={0}
                             />
                         </linearGradient>
                     </defs>
                     <Tooltip
-                        contentStyle={darkMode ? { backgroundColor: "#111827" } : null}
-                        itemStyle={darkMode ? { color: "#818cf8" } : null}
+                        contentStyle={{ backgroundColor: "#111827" }}
+                        itemStyle={{ color: "#818cf8" }}
                     />
                     <Area
                         type="monotone"
