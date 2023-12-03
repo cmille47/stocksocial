@@ -4,17 +4,24 @@ import Overview from "./Overview";
 import Details from "./Details";
 import Chart from "./Chart";
 import Header from "./Header";
-import StockContext from "../../Context/StockContext";
 import { fetchStockDetails, fetchQuote } from "../../Common/Services/GetStockInfo";
+import {useNavigate, useParams} from 'react-router-dom';
+import { useAPIFlag } from '../../Context/APIContext';
 
 const Position2 = () => {
   const { darkMode } = useContext(ThemeContext);
-
-  const { stockSymbol } = useContext(StockContext);
-
+  const { stockSymbol } = useParams();
   const [stockDetails, setStockDetails] = useState({});
-
   const [quote, setQuote] = useState({});
+  const navigate = useNavigate();
+  const position = JSON.parse(localStorage.getItem('position'));
+  const portfolio = JSON.parse(localStorage.getItem('portfolio'));
+
+  useEffect(() => {
+    if (!portfolio){
+      navigate('/dashboard'); // go to dashboard if no portfolio (hard coded in)
+    }
+  }, [navigate, portfolio]);
 
   useEffect(() => {
     const updateStockDetails = async () => {
@@ -59,12 +66,15 @@ const Position2 = () => {
           price={quote.pc}
           change={quote.d}
           changePercent={quote.dp}
-          currency={stockDetails.currency}
+          position={position}
         />
       </div>
       <div className="row-span-2 xl:row-span-3">
         <Details details={stockDetails} />
       </div>
+      {/* <div className="row-span-2 xl:row-span-3">
+        <Details details={stockDetails} />
+      </div> */}
     </div>
   );
 };

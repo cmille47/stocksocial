@@ -4,7 +4,6 @@ import './App.css';
 import Parse from 'parse';
 import Components from "./Components/Components.js";
 import Navbar from './Components/NavBar/NavBar';
-import StockContext from './Context/StockContext';
 import ThemeContext from './Context/ThemeContext';
 import { useState } from 'react';
 
@@ -18,15 +17,12 @@ Parse.serverURL = 'https://parseapi.back4app.com/';
 
 function App() {
   const [darkMode, setStockData] = useState(true);
-  const [stockSymbol, setStockSymbol] = useState('AAPL');
 
   return (
     <div className="App">
       <ThemeContext.Provider value={{darkMode, setStockData}}>
-        <StockContext.Provider value={{stockSymbol, setStockSymbol}}>
           {/* <Navbar /> */}
           <Components />
-        </StockContext.Provider>
       </ThemeContext.Provider>
     </div>
   );

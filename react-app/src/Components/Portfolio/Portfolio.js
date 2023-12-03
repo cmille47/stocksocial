@@ -46,7 +46,7 @@ export default function Portfolio() {
             const position = positions.find((position) => position.id === position_id);
             localStorage.setItem('position', JSON.stringify(position));
         };
-        localStorage.setItem('portfolio', portfolio); 
+        localStorage.setItem('portfolio', JSON.stringify(portfolio)); 
         navigate(`/position/${ticker}`);
     };
 

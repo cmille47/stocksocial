@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { updatePortfolioCurrentValue, getAllUserPortfoliosWithLeagueNames } from '../../Common/Services/PortfolioService';
-// import { useParams } from 'react-router-dom';
 import { updatePortfolioPositions } from '../../Common/Services/PositionService';
 import { useAPIFlag } from '../../Context/APIContext';
 import { searchLeaguesByName, getLeagueByName } from '../../Common/Services/LeagueService';

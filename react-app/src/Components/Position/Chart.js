@@ -10,28 +10,28 @@ import {
     Tooltip,
 } from "recharts";
 import ThemeContext from "../../Context/ThemeContext";
-import StockContext from "../../Context/StockContext";
 import { getDailyChartData } from "../../Common/Services/GetStockInfo";
+import { useParams } from "react-router-dom";
+import { useAPIFlag } from '../../Context/APIContext';
 
 const mockData = [
-    {date: "2021-01-01", value: 100},
-    {date: "2021-01-02", value: 120},
-    {date: "2021-01-03", value: 130},
-    {date: "2021-01-04", value: 140},
-    {date: "2021-01-05", value: 150},
-    {date: "2021-01-06", value: 160},
-    {date: "2021-01-07", value: 170},
-    {date: "2021-01-08", value: 180},
-    {date: "2021-01-09", value: 190},
-    {date: "2021-01-10", value: 150},
+    { date: "2021-01-01", value: 100 },
+    { date: "2021-01-02", value: 120 },
+    { date: "2021-01-03", value: 130 },
+    { date: "2021-01-04", value: 140 },
+    { date: "2021-01-05", value: 150 },
+    { date: "2021-01-06", value: 160 },
+    { date: "2021-01-07", value: 170 },
+    { date: "2021-01-08", value: 180 },
+    { date: "2021-01-09", value: 190 },
+    { date: "2021-01-10", value: 150 },
 ];
 
 
 const Chart = () => {
     const { darkMode } = useContext(ThemeContext);
-
-    const { stockSymbol } = useContext(StockContext);
-
+    const { stockSymbol } = useParams();
+    const {useAPI} = useAPIFlag();
     const [data, setData] = useState([]);
     useEffect(() => {
         setData(mockData);
@@ -54,8 +54,9 @@ const Chart = () => {
     //             console.log(error);
     //         }
     //     };
-
-    //     updateChartData();
+    //     if (useAPI){
+        //     updateChartData();
+        // };
     // }, [stockSymbol]);
 
     return (
@@ -97,3 +98,4 @@ const Chart = () => {
 };
 
 export default Chart;
+
