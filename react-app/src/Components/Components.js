@@ -10,6 +10,7 @@ import ProtectedRoute from "../Common/Services/ProtectedRoute.js";
 import LeagueDetails from "./League/LeagueDetails.js";
 import Position from "./Position/Position.js";
 import Navbar from './NavBar/NavBar.js'; // Moved Navbar here
+import Position2 from "./Position/Position2.js";
 
 const Components = () => {
     return (
@@ -24,7 +25,7 @@ const Components = () => {
                 <Route path="/create-league" element={<ProtectedRoute element={League} />} />
                 <Route path="*" element = {<h1>404 Not Found</h1>} />
                 <Route path="/league/:leagueId" element={<LeagueDetails />} />
-                <Route path="/position/:stockName" element={<ProtectedRoute element={Position} />} />
+                <Route path="/position/:stockSymbol" element={<ProtectedRoute element={Position2} />} />
             </Routes>
         </Router>
     );

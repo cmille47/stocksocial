@@ -1,9 +1,8 @@
 import {useState, useEffect } from 'react';
-import { useAPIFlag } from '../../APIContext';
+import { useAPIFlag } from '../../Context/APIContext';
 import {useNavigate, useParams} from 'react-router-dom';
 import {getPosition} from '../../Common/Services/PositionService';
 import { getAStock, getDailyChartData } from '../../Common/Services/GetStockInfo';
-import StockInfo from './StockInfo';
 
 const Position = () => {
     const navigate = useNavigate();
@@ -45,11 +44,7 @@ const Position = () => {
 
     return (
         <div>
-            {stockTicker}
-            <StockInfo 
-                stockData={stockData}
-                position={position}
-            />
+
         </div>
     );
 }

@@ -16,17 +16,16 @@ export const getAllUserPortfolios = async (userID) => {
 
 // update multiple attributes at once
 // each update is a tuple of (key, value)
-export const updatePortfolio = async (portfolioID, ...updates) => {
+export const updatePortfolio = async (portfolioID, updates) => {
+    const Portfolio = Parse.Object.extend('Portfolio');
+    const query = new Parse.Query(Portfolio);
+    query.equalTo('objectId', portfolioID);
     try{
-        const Portfolio = Parse.Object.extend('Portfolio');
-        const query = new Parse.Query(Portfolio);
-        const portfolio = await query.get(portfolioID);
-
+        const portfolio = await query.first();
         updates.forEach((update) => {
-            const [key, value]  = update;
+            const {key, value} = update;
             portfolio.set(key, value);
         });
-
         const updatedPortfolio = await portfolio.save();
         return updatedPortfolio;
     }

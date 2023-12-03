@@ -5,7 +5,7 @@ const PortfolioPage = ({ portfolio, positions, onClick}) => {
                 <div>
                     <h2> Portfolio Name: {portfolio.get("PortfolioName")} </h2>
                     <h2> Current Value: {"$" + portfolio.get("currentValue")} </h2>
-                    <h2> Cash: {"$" + portfolio.get("RemainingCash")} </h2>
+                    <h2> Cash: {"$" + portfolio.get("RemainingCash").toFixed(2)} </h2>
                 </div>
             }
             <h2> Positions: </h2>

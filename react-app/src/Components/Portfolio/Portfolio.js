@@ -10,21 +10,20 @@ export default function Portfolio() {
     const navigate = useNavigate();
     const { portfolio_id } = useParams();
     const user_id = JSON.parse(localStorage.getItem('user')).objectId;
-
     const [portfolio, setPortfolio] = useState(null);
     const [positions, setPositions] = useState([]);
     const [matchingStocks, setMatchingStocks] = useState([]);
 
+    // make sure these are reset 
+    localStorage.removeItem('position');
+    localStorage.removeItem('portfolio'); 
+    
     // Fetch portfolio info and positions
     useEffect(() => {
         const fetchPortfolioData = async () => {
             try {
                 const portfolioData = await getPortfolio(portfolio_id, user_id);
                 setPortfolio(portfolioData);
-                // Update the portfolio's current value
-                const updatedValue = await updatePortfolioCurrentValue(portfolio_id);
-                setCurrentValue(updatedValue);
-
             } catch (error) {
                 console.error('Error fetching portfolio:', error);
             }
@@ -50,7 +49,7 @@ export default function Portfolio() {
             const position = positions.find((position) => position.id === position_id);
             localStorage.setItem('position', JSON.stringify(position));
         };
-        localStorage.setItem('portfolio', portfolio); 
+        localStorage.setItem('portfolio', JSON.stringify(portfolio)); 
         navigate(`/position/${ticker}`);
     };
 

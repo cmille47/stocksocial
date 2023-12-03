@@ -13,42 +13,39 @@ export const getAllStocks = async () => {
 };
 
 export const getAStock = async (query) => {
-    const apiKey = '942d8f501f25a9ffeacffaafbbdd8270';
-    const url = `https://financialmodelingprep.com/api/v3/search-ticker?exchange=${query}&apikey=${apiKey}`;
-
-    try {
-        const response = await axios.get(url);
-        console.log('Data:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error('Error:', error);
-    }
-};
-
-export const getDailyChartData = async () => {
   const apiKey = '942d8f501f25a9ffeacffaafbbdd8270';
-  const company = 'AAPL';
-  const toDate = '2023-10-01';
-  const fromDate = '2020-10-10';
-  const url = `https://financialmodelingprep.com/api/v3/historical-price-full/${company}&apikey=${apiKey}`;
+  const url = `https://financialmodelingprep.com/api/v3/search-ticker?exchange=${query}&apikey=${apiKey}`;
 
-  try{
+  try {
     const response = await axios.get(url);
     console.log('Data:', response.data);
+    return response.data;
   } catch (error) {
-    console.log('Error:', error);
+    console.error('Error:', error);
+  }
+};
+
+export const getDailyChartData = async (stocksymbol) => {
+  const apiKey = '942d8f501f25a9ffeacffaafbbdd8270';
+  const url = `https://financialmodelingprep.com/api/v3/historical-price-full/${stocksymbol}?apikey=${apiKey}`;
+
+  try {
+    const response = await fetch(url);
+    return await response.json();
+  } catch (error) {
+    throw new Error(error);
   }
 }
 
 const basePath = "https://finnhub.io/api/v1";
-
+const apiKey = "clkf2l1r01qso7g5nnmgclkf2l1r01qso7g5nnn0";
 /**
  * Searches best stock matches based on a user's query
  * @param {string} query - The user's query, e.g. 'fb'
  * @returns {Promise<Object[]>} Response array of best stock matches
  */
 export const searchSymbol = async (query) => {
-  const url = `${basePath}/search?q=${query}&token=${process.env.REACT_APP_API_KEY}`;
+  const url = `${basePath}/search?q=${query}&token=${apiKey}`;
   const response = await fetch(url);
 
   if (!response.ok) {
@@ -65,7 +62,7 @@ export const searchSymbol = async (query) => {
  * @returns {Promise<Object>} Response object
  */
 export const fetchStockDetails = async (stockSymbol) => {
-  const url = `${basePath}/stock/profile2?symbol=${stockSymbol}&token=${process.env.REACT_APP_API_KEY}`;
+  const url = `${basePath}/stock/profile2?symbol=${stockSymbol}&token=${apiKey}`;
   const response = await fetch(url);
 
   if (!response.ok) {
@@ -82,7 +79,7 @@ export const fetchStockDetails = async (stockSymbol) => {
  * @returns {Promise<Object>} Response object
  */
 export const fetchQuote = async (stockSymbol) => {
-  const url = `${basePath}/quote?symbol=${stockSymbol}&token=${process.env.REACT_APP_API_KEY}`;
+  const url = `${basePath}/quote?symbol=${stockSymbol}&token=${apiKey}`;
   const response = await fetch(url);
 
   if (!response.ok) {
@@ -107,7 +104,19 @@ export const fetchHistoricalData = async (
   from,
   to
 ) => {
-  const url = `${basePath}/stock/candle?symbol=${stockSymbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_API_KEY}`;
+  const url = `${basePath}/stock/candle?symbol=${stockSymbol}&resolution=${resolution}&from=${from}&to=${to}&token=${apiKey}`;
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    const message = `An error has occured: ${response.status}`;
+    throw new Error(message);
+  }
+
+  return await response.json();
+};
+
+export const fetchFinancials = async (stockSymbol) => {
+  const url = `${basePath}/stock/metric?symbol=${stockSymbol}&metric=all&token=${process.env.REACT_APP_API_KEY}`;
   const response = await fetch(url);
 
   if (!response.ok) {
