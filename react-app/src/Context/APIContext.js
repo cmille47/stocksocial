@@ -6,7 +6,7 @@ import React, { createContext, useContext, useState } from 'react';
 const APIContext = createContext();
 
 export const APIProvider = ({ children }) => {
-  const [useAPI, setUseAPI] = useState(true); //change as needed
+  const [useAPI, setUseAPI] = useState(false); //change as needed
 
   return (
     <APIContext.Provider value={{ useAPI, setUseAPI }}>
