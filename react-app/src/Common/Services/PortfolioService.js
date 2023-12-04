@@ -141,7 +141,30 @@ export const createNewPortfolio = async (userId, leagueId, startingAmount, portf
     }
 };
 
+export const getPortfolioCurrentValue = async (portfolioID) => {
+    const Position = Parse.Object.extend('Position');
+    const query = new Parse.Query(Position);
+    query.equalTo('PortfolioID', portfolioID);
+    
+    try {
+        const results = await query.find();
+        let curr_val = 0;
 
+        results.forEach((position) => {
+            curr_val += position.get('EndPrice') * position.get('Shares');
+        });
+
+        const Portfolio = Parse.Object.extend('Portfolio');
+        const query2 = new Parse.Query(Portfolio);
+        const portfolio = await query2.get(portfolioID);
+        
+        curr_val += portfolio.get('RemainingCash');
+        return curr_val;
+    } catch (error) {
+        console.error('Error fetching portfolio current value', error);
+        throw error;
+    }
+};
 
 
 

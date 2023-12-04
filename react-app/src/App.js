@@ -9,8 +9,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import './App.css';
 import Parse from 'parse';
 import Components from "./Components/Components.js";
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 import Navbar from './Components/NavBar/NavBar';
 
 

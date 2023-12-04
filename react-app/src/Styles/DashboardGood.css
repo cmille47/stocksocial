@@ -1,18 +1,89 @@
 /* DashboardGood.css */
 
+
+/* DashboardStyling.css */
+
+/* Overall container for the dashboard */
+.dashboard-container {
+  display: flex;
+}
+
+/* Left side styling */
+.dashboard-left-side {
+  flex: 3; /* Takes up 75% of the width */
+  padding: 20px;
+}
+
+/* Right side styling */
+.dashboard-right-side {
+  flex: 1; /* Takes up 25% of the width */
+  padding: 20px;
+}
+
+/* Title at the top of the right side */
+.dashboard-right-side h2dash {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2em; /* Make it larger */
+  margin-left: 10px; /* Adjusted the left margin */
+  margin-right: 20px; /* Adjusted the right margin */
+
+}
+
+/* League search bar styling */
+.dashboard-right-side .dashboard-search-container {
+  margin-bottom: 20px;
+}
+
+/* Create League button styling */
+.dashboard-right-side .dashboard-create-league-button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* Portfolio - League listings styling */
+.dashboard-left-side ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dashboard-left-side li {
+  margin-bottom: 10px;
+}
+
+.dashboard-left-side a {
+  text-decoration: none;
+  color: #333;
+}
+
+.league-info {
+  margin-left: 10px; 
+  text-align: left;
+}
+
+
+
+
+/*
 .search-container {
-    max-width: 400px; /* Adjust the maximum width as needed */
-    margin: 0 auto; /* Center the container */
+    max-width: 400px; 
+    margin: 0 auto; 
   }
   
   .search-bar {
-    /* ... other styles */
-    width: 100%; /* Make the input span the entire container */
+    
+    width: 100%; 
   }
   
   .matching-leagues-list {
-    /* ... other styles */
+    
     max-height: 150px;
     overflow-y: auto;
   }
-  
+  */
