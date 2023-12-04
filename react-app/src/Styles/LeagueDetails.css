@@ -1,90 +1,242 @@
 /* Inside LeagueDetails.css */
 
-/* Overall container style */
-.container-league {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
+.league-details-container {
+    display: flex;
+    background-image: url('../Images/Money.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-position-y: 100px; /* Adjust this value to shift the image down */
+    height: 100vh;
+    margin: 0; /* Remove default body margin */
+    /* font-family: 'Your Preferred Font', sans-serif; Specify your preferred font */
   }
   
-  /* League details header style */
-  h2-league {
-    font-size: 24px;
-    margin-bottom: 16px;
+  .league-details-container .league-left-side {
+    flex-grow: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
   
-  /* League details information style */
-  p-league {
-    font-size: 16px;
-    margin-bottom: 8px;
+  .league-details-container .league-left-side table {
+    width: 80%;
+    margin-top: 20px;
+    border-collapse: collapse;
   }
   
-  /* Created by user style */
-  p-league.created-by-league {
-    font-weight: bold;
-  }
-  
-  /* Join button and input style */
-  label-league {
-    display: block;
-    margin-bottom: 8px;
-  }
-  
-  input-league {
-    width: 100%;
+  .league-details-container .league-left-side th,
+  .league-details-container .league-left-side td {
+    border: 1px solid transparent;
     padding: 8px;
-    margin-bottom: 16px;
   }
   
-  button-league {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 20px;
+  /* Rest of the styles for .league-left-side go here */
+  
+  .league-details-container .league-left-side tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+  }
+  
+  .league-details-container .league-left-side tbody tr:nth-child(even) {
+    background-color: #ffffff;
+  }
+  
+  .league-left-side tbody tr td:first-child {
+    position: relative;
+  }
+  
+  .league-left-side tbody tr td:first-child::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent; 
+    border-radius: 50%;
+    margin-right: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  
+  .league-left-side tbody tr.rank-1 td:first-child::before {
+    border-color: #ffd700;
+  }
+  
+
+  .league-left-side tbody tr.rank-2 td:first-child::before {
+    border-color: #c0c0c0;
+  }
+  
+
+  .league-left-side tbody tr.rank-3 td:first-child::before {
+    border-color: #cd7f32;
+  }
+  
+
+  .league-left-side tbody tr td:first-child span {
+    position: relative;
+    z-index: 1;
+  }
+  
+
+
+  .league-details-container .league-right-side {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items on the x-axis */
+    justify-content: flex-start; /* Align items to the start (top) on the y-axis */
+  }
+  
+  .league-details-container .league-right-side .league-details-button {
+    display: block;
+    max-height: 50px;
+    max-width: 600px;
+    margin: 10px 0;
+    text-align: center;
+    padding: 10px;
+    background-color: #b6b6b6 !important;
+    color: #fff !important;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
   }
   
-  button-league:hover {
-    background-color: #45a049;
+  .league-details-container .league-right-side .join-league-button {
+    display: block;
+    max-height: 50px;
+    max-width: 600px;
+    margin: 10px 0;
+    text-align: center;
+    padding: 10px;
+    background-color: #b6b6b6 !important;
+    color: #fff !important;
+    border: none;
+    cursor: pointer;
+  }
+
+ 
+  
+  /* Rest of the styles for .league-right-side go here */
+  
+/*
+.league-details-container {
+    display: flex;
+    background-image: url('../Images/Money.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-position-y: 100px; 
+    height: 100vh;
   }
   
-  /* Full league message style */
-  p-league.full-league {
-    color: red;
-    font-weight: bold;
+  .league-left-side {
+    flex-grow: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
   
-  /* League portfolios list style */
-  ul-league {
-    list-style-type: none;
-    padding: 0;
+  .league-left-side table {
+    width: 80%;
+    margin-top: 20px;
+    border-collapse: collapse;
   }
   
-  li-league {
-    margin-bottom: 8px;
+  .league-left-side th,
+  .league-left-side td {
+    border: 1px solid transparent;
+    padding: 8px;
   }
   
-  /* Top 3 portfolios list style */
-  h3-league {
-    font-size: 20px;
-    margin-top: 16px;
+ 
+  .league-left-side tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
   }
   
-  /* Leaders list style */
-  ol-league.leaders-league {
-    list-style-type: decimal;
-    padding-left: 20px;
+
+  .league-left-side tbody tr:nth-child(even) {
+    background-color: #ffffff;
   }
   
-  ol-league.leaders-league li-league {
-    margin-bottom: 8px;
+
+  .league-left-side tbody tr td:first-child {
+    position: relative;
   }
   
-  /* Responsive design for smaller screens */
-  @media only screen and (max-width: 600px) {
-    .container-league {
-      padding: 10px;
-    }
+  .league-left-side tbody tr td:first-child::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent; 
+    border-radius: 50%;
+    margin-right: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   
+  
+  .league-left-side tbody tr.rank-1 td:first-child::before {
+    border-color: #ffd700;
+  }
+  
+
+  .league-left-side tbody tr.rank-2 td:first-child::before {
+    border-color: #c0c0c0;
+  }
+  
+
+  .league-left-side tbody tr.rank-3 td:first-child::before {
+    border-color: #cd7f32;
+  }
+  
+
+  .league-left-side tbody tr td:first-child span {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .league-container .league-right-side {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+  }
+  
+  .league-container .league-right-side .league-details-button {
+    display: block;
+    max-height: 50px;
+    max-width: 600px;
+    margin: 10px 0; 
+    text-align: center;
+    padding: 10px;
+    background-color: #b6b6b6 !important;
+    color: #fff !important;
+    border: none;
+    cursor: pointer;
+  }
+
+  .league-container .league-right-side .join-league-button {
+    display: block;
+    max-height: 50px; 
+    max-width: 600px;
+    margin: 10px 0;
+    text-align: center;
+    padding: 10px;
+    background-color: #b6b6b6 !important;
+    color: #fff !important;
+    border: none;
+    cursor: pointer;
+  }
+  
+  */
+ 
+  
+
