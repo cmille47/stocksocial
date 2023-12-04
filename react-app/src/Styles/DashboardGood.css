@@ -84,6 +84,18 @@
   text-align: left;
 }
 
+.league-link {
+  color: black;
+  font-weight: bold;
+  text-decoration: none; /* Remove underline by default */
+  cursor: pointer; /* Show pointer cursor on hover */
+  transition: color 0.3s ease; /* Smooth transition effect */
+}
+
+.league-link:hover {
+  color: darkblue; /* Change color on hover */
+}
+
 
 /*
 

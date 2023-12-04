@@ -54,7 +54,7 @@ const DashboardGood = () => {
       const values = {};
       for (const portfolio of portfolios) {
         const value = await getPortfolioCurrentValue(portfolio.id);
-        values[portfolio.id] = value;
+        values[portfolio.id] = value.toFixed(2);
       }
       setPortfolioValues(values);
     };
@@ -116,10 +116,13 @@ const DashboardGood = () => {
                   >
                     <div className="accordion-body">
                       <p className="league-info">
-                        <span>League: {portfolio.leagueName}</span>
+                        <span> League: </span> 
+                        <span className="league-link" onClick={() => handleLeagueNameClick(portfolio.leagueName)}> {portfolio.leagueName} </span>
                         <br />
                         <span>Current Value: ${portfolioValues[portfolio.id]}</span>
-                      </p>
+                        <br/>
+                        <a className="league-link" href={`/Portfolio/${portfolio.PortfolioName}/${portfolio.id}`}>View Portfolio</a>
+                        </p>
                     </div>
                   </div>
                 </div>
