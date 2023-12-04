@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ProtectedRoute from '../../Common/Services/ProtectedRoute';
 import DashboardGood from './DashboardGood';
 
