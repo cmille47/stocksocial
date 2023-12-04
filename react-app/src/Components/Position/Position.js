@@ -13,6 +13,7 @@ import { updatePortfolio } from "../../Common/Services/PortfolioService";
 const Position = () => {
   const { stockSymbol } = useParams();
   const [stockDetails, setStockDetails] = useState({});
+  const [userDetails, setUserDetails] = useState({});
   const [quote, setQuote] = useState({});
   const navigate = useNavigate();
   let position = JSON.parse(localStorage.getItem('position'));
@@ -29,6 +30,15 @@ const Position = () => {
     const updateStockDetails = async () => {
       try {
         const result = await fetchStockDetails(stockSymbol);
+        let user_result = null;
+        if (position) {
+          user_result = {
+            sharesOwned: position.Shares,
+            purchasePrice: position.StartPrice,
+            datePurchased: position.createdAt.slice(0, 10),
+          };
+        };
+        setUserDetails(user_result);
         setStockDetails(result);
       } catch (error) {
         setStockDetails({});
@@ -98,10 +108,10 @@ const Position = () => {
       className="h-screen grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-rows-8 md:grid-rows-7 xl:grid-rows-5 auto-rows-fr gap-6 p-10 font-quicksand bg-gray-900 text-gray-300"
     >
       <div className="col-span-1 md:col-span-2 xl:col-span-3 row-span-1 flex justify-start items-center">
-        <Header 
-        name={stockDetails.name} 
-        portfolioName={portfolio.PortfolioName} 
-        RemainingCash={portfolio.RemainingCash}
+        <Header
+          name={stockDetails.name}
+          portfolioName={portfolio.PortfolioName}
+          RemainingCash={portfolio.RemainingCash}
         />
       </div>
       <div className="md:col-span-2 row-span-4">
@@ -117,7 +127,7 @@ const Position = () => {
         />
       </div>
       <div className="row-span-2">
-        <Details details={stockDetails} />
+        <Details details={stockDetails} userDetails={userDetails} />
       </div>
       <div classame="row-span-1">
         <SaleButton

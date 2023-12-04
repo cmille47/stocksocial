@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Card from "./Card";
 
-const Details = ({ details }) => {
+const Details = ({ details, userDetails }) => {
 
     const detailsList = {
         name: "Name",
@@ -13,6 +13,12 @@ const Details = ({ details }) => {
         finnhubIndustry: "Industry",
     };
 
+    const userDetailsList = {
+        sharesOwned: "Shares Owned",
+        purchasePrice: "Purchase Price",
+        datePurchased: "Date Purchased",
+    };
+
     const convertMillionToBillion = (number) => {
         return (number / 1000).toFixed(2);
     };
@@ -22,6 +28,7 @@ const Details = ({ details }) => {
             <ul
                 className="w-full h-full flex flex-col justify-between divide-y-1 divide-gray-800"
             >
+                <h5> Company Information </h5>
                 {Object.keys(detailsList).map((item) => {
                     return (
                         <li key={item} className="flex-1 flex justify-between items-center">
@@ -35,6 +42,26 @@ const Details = ({ details }) => {
                     );
                 })}
             </ul>
+            <br/><br/>
+            {userDetails && (
+                <ul
+                    className="w-full h-full flex flex-col justify-between divide-y-1 divide-gray-800"
+                >
+                    <h5> User Position Information </h5>
+                    {Object.keys(userDetailsList).map((item) => {
+                        return (
+                            <li key={item} className="flex-1 flex justify-between items-center">
+                                <span>{userDetailsList[item]}</span>
+                                <span className="font-bold">
+                                    {item === "purchasePrice"
+                                        ? `$${userDetails[item]}`
+                                        : userDetails[item]}
+                                </span>
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
         </Card>
     );
 };
