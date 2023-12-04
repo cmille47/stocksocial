@@ -18,10 +18,10 @@ html {
     padding: 0 8px;
 }
 
-.UScard {
+/* .UScard {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin: 8px;
-}
+} */
 
 .USabout-section {
     padding: 50px;
@@ -30,9 +30,30 @@ html {
     color: white;
 }
 
+/* .UScontainer {
+    padding: 0 16px;
+} */
+
+.UScard {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 8px;
+    text-align: center; /* Center the content within the card */
+}
+
+.UScard img {
+    width: 100%;
+    max-width: 500px;
+    max-height: 300px; /* Set a maximum height for the images */
+    height: auto;
+}
+
+
 .UScontainer {
     padding: 0 16px;
+    max-width: 400px; /* Set a maximum width for the container */
+    margin: 0 auto; /* Center the container */
 }
+
 
 .UScontainer::after, .USrow::after {
     content: "";

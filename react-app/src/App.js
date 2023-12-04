@@ -3,8 +3,10 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import './App.css';
 import Parse from 'parse';
 import Components from "./Components/Components.js";
-import Navbar from './Components/NavBar/NavBar';
+// import dotenv from 'dotenv';
+// dotenv.config();
 import { useState } from 'react';
+
 
 Parse.initialize(
   "CFFw5eAHjZZTRjyaBeNL5d3gPcCsMvuBABU8ihJ9", //APP_ID
