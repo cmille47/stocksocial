@@ -9,7 +9,6 @@ import { createPosition, updatePosition } from "../../Common/Services/PositionSe
 import SaleButton from "./SaleButton";
 import { updatePortfolio } from "../../Common/Services/PortfolioService";
 import Navbar from "../NavBar/NavBar";
-import { Nav } from "react-bootstrap";
 
 const Position = () => {
   const { stockSymbol } = useParams();
@@ -114,17 +113,15 @@ const Position = () => {
   return (
     <div>
       <Navbar />
-      <div
-        className="h-screen grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-rows-8 md:grid-rows-7 xl:grid-rows-5 auto-rows-fr gap-6 p-10 font-quicksand bg-gray-900 text-gray-300"
-      >
-        <div className="col-span-1 md:col-span-2 xl:col-span-3 row-span-1 flex justify-start items-center">
+      <div className="tw-h-screen tw-grid tw-grid-cols-1 md:tw-grid-cols-2 xl:tw-grid-cols-3 tw-grid-rows-8 md:tw-grid-rows-7 xl:tw-grid-rows-5 tw-auto-rows-fr tw-gap-6 tw-p-10 tw-font-quicksand tw-bg-gray-900 tw-text-gray-300">
+        <div className="tw-col-span-1 md:tw-col-span-2 xl:tw-col-span-3 tw-row-span-1 tw-flex tw-justify-start tw-items-center">
           <Header
             name={stockDetails.name}
             portfolioName={portfolio.PortfolioName}
             RemainingCash={portfolio.RemainingCash}
           />
         </div>
-        <div className="md:col-span-2 row-span-4">
+        <div className="md:tw-col-span-2 tw-row-span-4">
           <Chart />
         </div>
         <div>
@@ -136,10 +133,10 @@ const Position = () => {
             position={position}
           />
         </div>
-        <div className="row-span-2">
+        <div className="tw-row-span-2">
           <Details details={stockDetails} userDetails={userDetails} />
         </div>
-        <div classame="row-span-1">
+        <div className="tw-row-span-1">
           <SaleButton
             position={position}
             currentValue={currentValue}
@@ -147,6 +144,7 @@ const Position = () => {
           />
         </div>
       </div>
+
     </div>
   );
 };

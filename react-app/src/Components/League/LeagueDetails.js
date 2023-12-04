@@ -18,6 +18,7 @@ import {
   getLeaderBoard,
 } from '../../Common/Services/LeagueService';
 import '../../Styles/LeagueDetails.css';
+import Navbar from '../NavBar/NavBar';
 
 Modal.setAppElement('#root');
 
@@ -130,19 +131,21 @@ const LeagueDetails = () => {
   }
 
   return (
-    <div className="league-details-container">
-      <div className="league-left-side">
-        <h3>League Portfolios:</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>UserName</th>
-              <th>Portfolio Name</th>
-              <th>CurrentValue</th>
-            </tr>
-          </thead>
-          {/* <tbody>
+    <div>
+      <Navbar />
+      <div className="league-details-container">
+        <div className="league-left-side">
+          <h3>League Portfolios:</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>UserName</th>
+                <th>Portfolio Name</th>
+                <th>CurrentValue</th>
+              </tr>
+            </thead>
+            {/* <tbody>
             {leaguePortfolios.map((portfolio, index) => (
               <tr key={portfolio.id}>
                 <td>{index + 1}</td>
@@ -161,35 +164,35 @@ const LeagueDetails = () => {
             ))}
           </tbody> */}
 
-          <tbody>
-          {leaguePortfolios.map((portfolio, index) => (
-            <tr key={portfolio.id} className={`rank-${index + 1}`}>
-              <td>{index + 1}</td>
-              <td>{userNames[portfolio.get('UserID')]}</td>
-              <td>
-                <Link to={`/portfolio/${encodeURIComponent(portfolio.get('PortfolioName'))}/${portfolio.id}`}>
-                  {portfolio.get('PortfolioName')}
-                </Link>
-              </td>
-              <td>{parseFloat(portfolio.get('currentValue')).toFixed(2)}</td>
-            </tr>
-          ))}
-        </tbody>
+            <tbody>
+              {leaguePortfolios.map((portfolio, index) => (
+                <tr key={portfolio.id} className={`rank-${index + 1}`}>
+                  <td>{index + 1}</td>
+                  <td>{userNames[portfolio.get('UserID')]}</td>
+                  <td>
+                    <Link to={`/portfolio/${encodeURIComponent(portfolio.get('PortfolioName'))}/${portfolio.id}`}>
+                      {portfolio.get('PortfolioName')}
+                    </Link>
+                  </td>
+                  <td>{parseFloat(portfolio.get('currentValue')).toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
 
 
 
 
-        </table>
-      </div>
+          </table>
+        </div>
 
-      <div className="league-right-side">
-        {/* <button onClick={() => setIsModalOpen(true)}>View League Details</button> */}
-        <button className="dashboard-right-side league-details-button" onClick={() => setIsModalOpen(true)}>
-          View League Details
-        </button>
+        <div className="league-right-side">
+          {/* <button onClick={() => setIsModalOpen(true)}>View League Details</button> */}
+          <button className="dashboard-right-side league-details-button" onClick={() => setIsModalOpen(true)}>
+            View League Details
+          </button>
 
 
-        {/* {isUserInLeague ? (
+          {/* {isUserInLeague ? (
           <p>{joinMessage || 'You are already in this league.'}</p>
         ) : (
           <>
@@ -210,47 +213,47 @@ const LeagueDetails = () => {
           </>
         )} */}
 
-      {!isUserInLeague ? (
-        <>
-          {!isLeagueFull ? (
+          {!isUserInLeague ? (
             <>
-              <label>
-                Portfolio Name:
-                <input type="text" id="portfolioName" />
-              </label>
-              <button className="dashboard-right-side join-league-button" onClick={handleJoinButtonClick}>
-                Join
-              </button>
+              {!isLeagueFull ? (
+                <>
+                  <label>
+                    Portfolio Name:
+                    <input type="text" id="portfolioName" />
+                  </label>
+                  <button className="dashboard-right-side join-league-button" onClick={handleJoinButtonClick}>
+                    Join
+                  </button>
+                </>
+              ) : (
+                <p>This league is currently full. Cannot join.</p>
+              )}
             </>
           ) : (
-            <p>This league is currently full. Cannot join.</p>
+            <p>{joinMessage || 'You are already in this league.'}</p>
           )}
-        </>
-      ) : (
-        <p>{joinMessage || 'You are already in this league.'}</p>
-      )}
 
 
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={() => setIsModalOpen(false)}
-        contentLabel="League Details"
-        style={{
-          content: {
-            width: '60%', // Set your desired width
-            height: '60%', // Set your desired height
-            margin: 'auto', // Center the modal horizontally
-          },
-        }}
-      >
-        <h2>{leagueDetails.get('LeagueName')} Details</h2>
-        <p>Starting Amount: {leagueDetails.get('StartingAmount')}</p>
-        <p>Current Players: {currentPlayers}</p>
-        <p>Max Players: {leagueDetails.get('NumPlayers')}</p>
-        {creator && <p>Created by: {creator.get('displayName')}</p>}
-        <button onClick={() => setIsModalOpen(false)}>Close</button>
-      </Modal>
-        {/* <Modal
+          <Modal
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
+            contentLabel="League Details"
+            style={{
+              content: {
+                width: '60%', // Set your desired width
+                height: '60%', // Set your desired height
+                margin: 'auto', // Center the modal horizontally
+              },
+            }}
+          >
+            <h2>{leagueDetails.get('LeagueName')} Details</h2>
+            <p>Starting Amount: {leagueDetails.get('StartingAmount')}</p>
+            <p>Current Players: {currentPlayers}</p>
+            <p>Max Players: {leagueDetails.get('NumPlayers')}</p>
+            {creator && <p>Created by: {creator.get('displayName')}</p>}
+            <button onClick={() => setIsModalOpen(false)}>Close</button>
+          </Modal>
+          {/* <Modal
           isOpen={isModalOpen}
           onRequestClose={() => setIsModalOpen(false)}
           contentLabel="League Details"
@@ -264,7 +267,8 @@ const LeagueDetails = () => {
           <button onClick={() => setIsModalOpen(false)}>Close</button>
         </Modal> */}
 
-        
+
+        </div>
       </div>
     </div>
   );
