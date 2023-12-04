@@ -8,7 +8,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { createPosition, updatePosition } from "../../Common/Services/PositionService";
 import SaleButton from "./SaleButton";
 import { updatePortfolio } from "../../Common/Services/PortfolioService";
-
+import Navbar from "../NavBar/NavBar";
+import { Nav } from "react-bootstrap";
 
 const Position = () => {
   const { stockSymbol } = useParams();
@@ -111,37 +112,40 @@ const Position = () => {
   }
 
   return (
-    <div
-      className="h-screen grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-rows-8 md:grid-rows-7 xl:grid-rows-5 auto-rows-fr gap-6 p-10 font-quicksand bg-gray-900 text-gray-300"
-    >
-      <div className="col-span-1 md:col-span-2 xl:col-span-3 row-span-1 flex justify-start items-center">
-        <Header
-          name={stockDetails.name}
-          portfolioName={portfolio.PortfolioName}
-          RemainingCash={portfolio.RemainingCash}
-        />
-      </div>
-      <div className="md:col-span-2 row-span-4">
-        <Chart />
-      </div>
-      <div>
-        <Overview
-          symbol={stockSymbol}
-          price={quote.pc}
-          change={quote.d}
-          changePercent={quote.dp}
-          position={position}
-        />
-      </div>
-      <div className="row-span-2">
-        <Details details={stockDetails} userDetails={userDetails} />
-      </div>
-      <div classame="row-span-1">
-        <SaleButton
-          position={position}
-          currentValue={currentValue}
-          handleSale={handleSale}
-        />
+    <div>
+      <Navbar />
+      <div
+        className="h-screen grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-rows-8 md:grid-rows-7 xl:grid-rows-5 auto-rows-fr gap-6 p-10 font-quicksand bg-gray-900 text-gray-300"
+      >
+        <div className="col-span-1 md:col-span-2 xl:col-span-3 row-span-1 flex justify-start items-center">
+          <Header
+            name={stockDetails.name}
+            portfolioName={portfolio.PortfolioName}
+            RemainingCash={portfolio.RemainingCash}
+          />
+        </div>
+        <div className="md:col-span-2 row-span-4">
+          <Chart />
+        </div>
+        <div>
+          <Overview
+            symbol={stockSymbol}
+            price={quote.pc}
+            change={quote.d}
+            changePercent={quote.dp}
+            position={position}
+          />
+        </div>
+        <div className="row-span-2">
+          <Details details={stockDetails} userDetails={userDetails} />
+        </div>
+        <div classame="row-span-1">
+          <SaleButton
+            position={position}
+            currentValue={currentValue}
+            handleSale={handleSale}
+          />
+        </div>
       </div>
     </div>
   );

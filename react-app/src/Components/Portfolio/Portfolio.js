@@ -5,6 +5,7 @@ import { getPortfolio, updatePortfolio } from '../../Common/Services/PortfolioSe
 import { getPortfolioPositions } from '../../Common/Services/PositionService';
 import {searchForStock} from '../../Common/Services/StockService';
 import SearchStocks from './SearchStocks.js';
+import Navbar from '../NavBar/NavBar.js';
 
 export default function Portfolio() {
     const navigate = useNavigate();
@@ -76,6 +77,7 @@ export default function Portfolio() {
 
     return (
         <div>
+            <Navbar />
             <h2>Portfolio ID: {portfolio_id} </h2>
             <PortfolioPage 
                 portfolio={portfolio}
