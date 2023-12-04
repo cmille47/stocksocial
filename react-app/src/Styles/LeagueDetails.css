@@ -1,0 +1,90 @@
+/* Inside LeagueDetails.css */
+
+/* Overall container style */
+.container-league {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  /* League details header style */
+  h2-league {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  /* League details information style */
+  p-league {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  
+  /* Created by user style */
+  p-league.created-by-league {
+    font-weight: bold;
+  }
+  
+  /* Join button and input style */
+  label-league {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  input-league {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+  }
+  
+  button-league {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button-league:hover {
+    background-color: #45a049;
+  }
+  
+  /* Full league message style */
+  p-league.full-league {
+    color: red;
+    font-weight: bold;
+  }
+  
+  /* League portfolios list style */
+  ul-league {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li-league {
+    margin-bottom: 8px;
+  }
+  
+  /* Top 3 portfolios list style */
+  h3-league {
+    font-size: 20px;
+    margin-top: 16px;
+  }
+  
+  /* Leaders list style */
+  ol-league.leaders-league {
+    list-style-type: decimal;
+    padding-left: 20px;
+  }
+  
+  ol-league.leaders-league li-league {
+    margin-bottom: 8px;
+  }
+  
+  /* Responsive design for smaller screens */
+  @media only screen and (max-width: 600px) {
+    .container-league {
+      padding: 10px;
+    }
+  }
+  

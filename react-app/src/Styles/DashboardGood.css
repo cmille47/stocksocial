@@ -1,11 +1,29 @@
-/* DashboardGood.css */
-
-
 /* DashboardStyling.css */
 
+/* Set background image for the entire page */
+/*
+.backgroundStyle3 {
+  background-image: url('../Images/Bull.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position-y: 100px; 
+  margin: 0; 
+  font-family: 'Your Preferred Font', sans-serif; 
+}
+*/
+
 /* Overall container for the dashboard */
-.dashboard-container {
+.dashboard-container.backgroundStyle3 {
   display: flex;
+  background-image: url('../Images/Bull.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position-y: 100px; /* Adjust this value to shift the image down */
+  height: 100vh;
+  margin: 0; /* Remove default body margin */
+  font-family: 'Your Preferred Font', sans-serif; /* Specify your preferred font */
 }
 
 /* Left side styling */
@@ -27,7 +45,6 @@
   font-size: 2em; /* Make it larger */
   margin-left: 10px; /* Adjusted the left margin */
   margin-right: 20px; /* Adjusted the right margin */
-
 }
 
 /* League search bar styling */
@@ -41,7 +58,7 @@
   width: 100%;
   text-align: center;
   padding: 10px;
-  background-color: #3498db;
+  background-color: #b6b6b6;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -68,8 +85,74 @@
 }
 
 
+/*
+
+.dashboard-container {
+  display: flex;
+}
 
 
+.dashboard-left-side {
+  flex: 3; 
+  padding: 20px;
+}
+
+
+.dashboard-right-side {
+  flex: 1; 
+  padding: 20px;
+}
+
+
+.dashboard-right-side h2dash {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2em; 
+  margin-left: 10px; 
+  margin-right: 20px;
+
+}
+
+
+.dashboard-right-side .dashboard-search-container {
+  margin-bottom: 20px;
+}
+
+
+.dashboard-right-side .dashboard-create-league-button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+
+.dashboard-left-side ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dashboard-left-side li {
+  margin-bottom: 10px;
+}
+
+.dashboard-left-side a {
+  text-decoration: none;
+  color: #333;
+}
+
+.league-info {
+  margin-left: 10px; 
+  text-align: left;
+}
+
+
+
+*/
 /*
 .search-container {
     max-width: 400px; 

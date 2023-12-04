@@ -6,6 +6,8 @@ import { getLeague, checkUserInLeague, addUserToLeague } from '../../Common/Serv
 import { createNewPortfolio, getLeaguePortfolios } from '../../Common/Services/PortfolioService';
 import { getUserDetails } from '../../Common/Services/AuthService';
 import { getCurrentNumPlayers, getLeaderBoard } from '../../Common/Services/LeagueService'; // Import getLeaderBoard
+import '../../Styles/LeagueDetails.css';
+
 
 const LeagueDetails = () => {
   const { leagueId } = useParams();

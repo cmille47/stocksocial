@@ -1,3 +1,7 @@
+
+
+// NO BACKGROUND IMAGE
+
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -80,7 +84,8 @@ const DashboardGood = () => {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container backgroundStyle3">
+
       <section className="dashboard-left-side">
         <h1>Welcome {user.displayName} to your Dashboard!</h1>
         <br />
@@ -142,8 +147,10 @@ const DashboardGood = () => {
           Create League
         </Link>
       </section>
+
     </div>
   );
 };
 
 export default DashboardGood;
+
