@@ -1,9 +1,3 @@
-
-
-
-
-
-// import logo from './logo.svg';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import './App.css';
@@ -11,7 +5,7 @@ import Parse from 'parse';
 import Components from "./Components/Components.js";
 // import dotenv from 'dotenv';
 // dotenv.config();
-import Navbar from './Components/NavBar/NavBar';
+import { useState } from 'react';
 
 
 Parse.initialize(
@@ -23,10 +17,11 @@ Parse.initialize(
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
 function App() {
+
   return (
     <div className="App">
-      {/* <Navbar /> */}
-      <Components />
+          {/* <Navbar /> */}
+          <Components />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PortfolioPage from './PortfolioPage.js';
-import { getPortfolio } from '../../Common/Services/PortfolioService';
+import { getPortfolio, updatePortfolio } from '../../Common/Services/PortfolioService';
 import { getPortfolioPositions } from '../../Common/Services/PositionService';
 import {searchForStock} from '../../Common/Services/StockService';
 import SearchStocks from './SearchStocks.js';
@@ -10,21 +10,27 @@ export default function Portfolio() {
     const navigate = useNavigate();
     const { portfolio_id } = useParams();
     const user_id = JSON.parse(localStorage.getItem('user')).objectId;
-
     const [portfolio, setPortfolio] = useState(null);
     const [positions, setPositions] = useState([]);
+    const [activePositions, setActivePositions] = useState([]);
+    const [inactivePositions, setInactivePositions] = useState([]);
     const [matchingStocks, setMatchingStocks] = useState([]);
 
+    // make sure these are reset 
+    localStorage.removeItem('position');
+    localStorage.removeItem('portfolio'); 
+    
     // Fetch portfolio info and positions
     useEffect(() => {
         const fetchPortfolioData = async () => {
             try {
                 const portfolioData = await getPortfolio(portfolio_id, user_id);
+                if (!portfolioData) {
+                    alert('Invalid portfolio request'); 
+                    navigate('/dashboard');
+                    return;
+                }
                 setPortfolio(portfolioData);
-                // Update the portfolio's current value
-                const updatedValue = await updatePortfolioCurrentValue(portfolio_id);
-                setCurrentValue(updatedValue);
-
             } catch (error) {
                 console.error('Error fetching portfolio:', error);
             }
@@ -33,11 +39,14 @@ export default function Portfolio() {
         const fetchPortfolioPositions = async () => {
             try {
                 const positions = await getPortfolioPositions(portfolio_id);
+                setActivePositions(positions.filter((position) => position.get('DateSold') === undefined));
+                setInactivePositions(positions.filter((position) => position.get('DateSold') !== undefined));
                 setPositions(positions);
             } catch (error) {
                 console.error('Error fetching portfolio positions:', error);
             }
         };
+
         fetchPortfolioData();
         fetchPortfolioPositions();
     }, [portfolio_id, navigate, user_id]);
@@ -50,7 +59,7 @@ export default function Portfolio() {
             const position = positions.find((position) => position.id === position_id);
             localStorage.setItem('position', JSON.stringify(position));
         };
-        localStorage.setItem('portfolio', portfolio); 
+        localStorage.setItem('portfolio', JSON.stringify(portfolio)); 
         navigate(`/position/${ticker}`);
     };
 
@@ -70,7 +79,8 @@ export default function Portfolio() {
             <h2>Portfolio ID: {portfolio_id} </h2>
             <PortfolioPage 
                 portfolio={portfolio}
-                positions={positions}
+                activePositions={activePositions}
+                inactivePositions={inactivePositions}
                 onClick={onClick}
             />
             <SearchStocks

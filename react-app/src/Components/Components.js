@@ -24,7 +24,7 @@ const Components = () => {
                 <Route path="/create-league" element={<ProtectedRoute element={League} />} />
                 <Route path="*" element = {<h1>404 Not Found</h1>} />
                 <Route path="/league/:leagueId" element={<LeagueDetails />} />
-                <Route path="/position/:stockName" element={<ProtectedRoute element={Position} />} />
+                <Route path="/position/:stockSymbol" element={<ProtectedRoute element={Position} />} />
             </Routes>
         </Router>
     );

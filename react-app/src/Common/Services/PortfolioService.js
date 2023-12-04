@@ -16,17 +16,16 @@ export const getAllUserPortfolios = async (userID) => {
 
 // update multiple attributes at once
 // each update is a tuple of (key, value)
-export const updatePortfolio = async (portfolioID, ...updates) => {
+export const updatePortfolio = async (portfolioID, updates) => {
+    const Portfolio = Parse.Object.extend('Portfolio');
+    const query = new Parse.Query(Portfolio);
+    query.equalTo('objectId', portfolioID);
     try{
-        const Portfolio = Parse.Object.extend('Portfolio');
-        const query = new Parse.Query(Portfolio);
-        const portfolio = await query.get(portfolioID);
-
+        const portfolio = await query.first();
         updates.forEach((update) => {
-            const [key, value]  = update;
+            const {key, value} = update;
             portfolio.set(key, value);
         });
-
         const updatedPortfolio = await portfolio.save();
         return updatedPortfolio;
     }
@@ -44,7 +43,9 @@ export const updatePortfolioCurrentValue = async (portfolioID) => {
 
     let curr_val = 0;
     results.forEach((position) => {
-        curr_val += position.get('EndPrice') * position.get('Shares');
+        if (position.get('DateSold') === undefined){
+            curr_val += position.get('EndPrice') * position.get('Shares');
+        }
     });
 
     const Portfolio = Parse.Object.extend('Portfolio');
@@ -96,7 +97,6 @@ export const getPortfolio = async (portfolioID, userID) => {
     query.equalTo('UserID', userID);
     try {
         const result = await query.first();
-        if (result === undefined) {throw new Error('User portfolio does not exist');}
         return result;
     } catch (error) {
         console.error('Error fetching portfolio', error);
