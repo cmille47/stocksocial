@@ -90,11 +90,10 @@ export const getLeaguePortfolios = async (leagueID) => {
     }
 };
 
-export const getPortfolio = async (portfolioID, userID) => {
+export const getPortfolio = async (portfolioID) => {
     const Portfolio = Parse.Object.extend('Portfolio');
     const query = new Parse.Query(Portfolio);
     query.equalTo('objectId', portfolioID);
-    query.equalTo('UserID', userID);
     try {
         const result = await query.first();
         return result;

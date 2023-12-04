@@ -13,12 +13,12 @@ import Navbar from "../NavBar/NavBar";
 const Position = () => {
   const { stockSymbol } = useParams();
   const [stockDetails, setStockDetails] = useState({});
-  const [userDetails, setUserDetails] = useState({});
+  const [userDetails, setUserDetails] = useState(false);
   const [quote, setQuote] = useState({});
   const navigate = useNavigate();
   const [position, setPosition] = useState(JSON.parse(localStorage.getItem('position')));
   const [portfolio, setPortfolio] = useState(JSON.parse(localStorage.getItem('portfolio')));
-  const positionExists = position ? true : false;
+  const position_id = position ? position.objectId : null;
   const [currentValue, setCurrentValue] = useState(null);
 
   useEffect(() => {
@@ -28,15 +28,14 @@ const Position = () => {
   }, [navigate, portfolio]);
 
   useEffect(() => {
-    if (positionExists) {
-      const user_result = {
+    if (position_id !== null) {
+      setUserDetails({
         sharesOwned: position.Shares,
         purchasePrice: position.StartPrice,
         datePurchased: position.createdAt.slice(0, 10),
-      };
-      setUserDetails(user_result);
+      })
     };
-  }, [positionExists, position.Shares, position.StartPrice, position.createdAt]);
+  }, [position_id, position]);
 
   useEffect(() => {
     const updateStockDetails = async () => {
@@ -65,16 +64,16 @@ const Position = () => {
 
   useEffect(() => {
     const updateCurrentValue = async () => {
-      if (quote && positionExists) {
-        const updated_position = (await updatePosition(position.objectId, [{ key: 'EndPrice', value: quote.pc }])).toJSON();
+      if (quote && position_id !== null) {
+        const updated_position = (await updatePosition(position_id, [{ key: 'EndPrice', value: quote.pc }])).toJSON();
         setPosition(updated_position);
         const curr = (updated_position.EndPrice * updated_position.Shares).toFixed(2);
         setCurrentValue(curr);
-        console.log("Infinite loop 1");
+        console.log('infiniteLoop')
       };
     };
     updateCurrentValue();
-  }, [quote, positionExists, position.objectId]);
+  }, [quote, position_id]);
 
   const handleSale = async (inputvalue, type) => {
     if (type === 'sell') {

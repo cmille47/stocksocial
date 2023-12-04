@@ -25,12 +25,12 @@ const SaleButton = ({ position, currentValue, handleSale }) => {
             {showInput ? (
                 <div>
                     <form className="tw-max-w-sm tw-mx-auto">
-                        <label htmlFor="desiredShares" className="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 tw-dark:text-white">Number of Desired Shares:</label>
+                        <label htmlFor="desiredShares" className="tw-block tw-mb-2 tw-text-sm tw-font-medium tw-text-gray-900 dark:tw-text-white">Number of Desired Shares:</label>
                         <input
                             id="desiredShares"
                             type="number"
                             aria-describedby="helper-text-explanation"
-                            className="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg tw-focus:tw-ring-blue-500 tw-focus:tw-border-blue-500 tw-block tw-w-full tw-p-2.5 tw-dark:bg-gray-700 tw-dark:border-gray-600 tw-dark:tw-placeholder-gray-400 tw-dark:text-white tw-dark:focus:tw-ring-blue-500 tw-dark:focus:tw-border-blue-500"
+                            className="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-rounded-lg focus:tw-ring-blue-500 tw-focus:tw-border-blue-500 tw-block tw-w-full tw-p-2.5 dark:tw-bg-gray-700 dark:tw-border-gray-600 dark:tw-placeholder-gray-400 dark:tw-text-white dark:focus:tw-ring-blue-500 dark:focus:tw-border-blue-500"
                             value={input}
                             onChange={handleInputChange}
                         />

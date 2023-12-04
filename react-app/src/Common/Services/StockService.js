@@ -12,7 +12,6 @@ export const searchForStock = async (term) => {
 
     try {
         const results = await mainQuery.find();
-        console.log(results)
         return results;
     } catch (error) {
         console.error('Error searching for stock:', error);
