@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Overview from "./Overview";
 import Details from "./Details";
 import Chart from "./Chart";
@@ -16,8 +16,9 @@ const Position = () => {
   const [userDetails, setUserDetails] = useState({});
   const [quote, setQuote] = useState({});
   const navigate = useNavigate();
-  let position = JSON.parse(localStorage.getItem('position'));
-  let portfolio = JSON.parse(localStorage.getItem('portfolio'));
+  const [position, setPosition] = useState(JSON.parse(localStorage.getItem('position')));
+  const [portfolio, setPortfolio] = useState(JSON.parse(localStorage.getItem('portfolio')));
+  const positionExists = position ? true : false;
   const [currentValue, setCurrentValue] = useState(null);
 
   useEffect(() => {
@@ -27,18 +28,20 @@ const Position = () => {
   }, [navigate, portfolio]);
 
   useEffect(() => {
+    if (positionExists) {
+      const user_result = {
+        sharesOwned: position.Shares,
+        purchasePrice: position.StartPrice,
+        datePurchased: position.createdAt.slice(0, 10),
+      };
+      setUserDetails(user_result);
+    };
+  }, [positionExists, position.Shares, position.StartPrice, position.createdAt]);
+
+  useEffect(() => {
     const updateStockDetails = async () => {
       try {
         const result = await fetchStockDetails(stockSymbol);
-        let user_result = null;
-        if (position) {
-          user_result = {
-            sharesOwned: position.Shares,
-            purchasePrice: position.StartPrice,
-            datePurchased: position.createdAt.slice(0, 10),
-          };
-        };
-        setUserDetails(user_result);
         setStockDetails(result);
       } catch (error) {
         setStockDetails({});
@@ -62,15 +65,16 @@ const Position = () => {
 
   useEffect(() => {
     const updateCurrentValue = async () => {
-      if (quote && position) {
-        const updated_position = await updatePosition(position.objectId, [{ key: 'EndPrice', value: quote.pc }]);
-        position = updated_position.toJSON();
-        const curr = (position.EndPrice * position.Shares).toFixed(2);
+      if (quote && positionExists) {
+        const updated_position = (await updatePosition(position.objectId, [{ key: 'EndPrice', value: quote.pc }])).toJSON();
+        setPosition(updated_position);
+        const curr = (updated_position.EndPrice * updated_position.Shares).toFixed(2);
         setCurrentValue(curr);
+        console.log("Infinite loop 1");
       };
     };
     updateCurrentValue();
-  }, [quote, position]);
+  }, [quote, positionExists, position.objectId]);
 
   const handleSale = async (inputvalue, type) => {
     if (type === 'sell') {
@@ -86,9 +90,10 @@ const Position = () => {
       const portfolioUpdates = [
         { key: 'RemainingCash', value: newCash }
       ];
-      position = (await updatePosition(position.objectId, positionUpdates)).toJSON();
-      portfolio = (await updatePortfolio(portfolio.objectId, portfolioUpdates)).toJSON();
-      console.log(portfolio);
+      const updated_position = (await updatePosition(position.objectId, positionUpdates)).toJSON();
+      const updated_portfolio = (await updatePortfolio(portfolio.objectId, portfolioUpdates)).toJSON();
+      setPosition(updated_position);
+      setPortfolio(updated_portfolio);
     }
     else if (type === 'buy') {
       const newCash = await portfolio.RemainingCash - (inputvalue * quote.pc);
@@ -96,8 +101,10 @@ const Position = () => {
         alert('Not enough funds to purchase this position.');
         return;
       }
-      position = (await createPosition(portfolio.objectId, stockDetails.name, stockSymbol, inputvalue, quote.pc, quote.pc)).toJSON();
-      portfolio = (await updatePortfolio(portfolio.objectId, [{ key: 'RemainingCash', value: newCash }])).toJSON();
+      const updated_position = (await createPosition(portfolio.objectId, stockDetails.name, stockSymbol, inputvalue, quote.pc, quote.pc)).toJSON();
+      const updated_portfolio = (await updatePortfolio(portfolio.objectId, [{ key: 'RemainingCash', value: newCash }])).toJSON();
+      setPosition(updated_position);
+      setPortfolio(updated_portfolio);
     }
     navigate(`/portfolio/${portfolio.PortfolioName}/${portfolio.objectId}`);
     localStorage.removeItem('position');
