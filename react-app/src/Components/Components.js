@@ -9,12 +9,10 @@ import AuthRegister from "./Auth/AuthRegister.js";
 import ProtectedRoute from "../Common/Services/ProtectedRoute.js";
 import LeagueDetails from "./League/LeagueDetails.js";
 import Position from "./Position/Position.js";
-import Navbar from './NavBar/NavBar.js'; // Moved Navbar here
 
 const Components = () => {
     return (
         <Router>
-            <Navbar />
             <Routes>
                 <Route path="/" element={<AuthLogin />} />
                 <Route path="/signup" element={<AuthRegister />} />

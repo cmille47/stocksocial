@@ -29,7 +29,6 @@ const AuthLogin = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         loginUser(usercreds).then((res) => {
-            console.log("LOGIN SUCCESFUL", res);
             localStorage.setItem('user', JSON.stringify(res));
             history('/dashboard'); // navigate to dashboard on successful login
         })
