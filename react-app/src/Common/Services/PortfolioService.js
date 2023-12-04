@@ -43,7 +43,9 @@ export const updatePortfolioCurrentValue = async (portfolioID) => {
 
     let curr_val = 0;
     results.forEach((position) => {
-        curr_val += position.get('EndPrice') * position.get('Shares');
+        if (position.get('DateSold') === undefined){
+            curr_val += position.get('EndPrice') * position.get('Shares');
+        }
     });
 
     const Portfolio = Parse.Object.extend('Portfolio');
@@ -95,7 +97,6 @@ export const getPortfolio = async (portfolioID, userID) => {
     query.equalTo('UserID', userID);
     try {
         const result = await query.first();
-        if (result === undefined) {throw new Error('User portfolio does not exist');}
         return result;
     } catch (error) {
         console.error('Error fetching portfolio', error);

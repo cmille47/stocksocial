@@ -53,8 +53,8 @@ const Chart = () => {
     //         }
     //     };
     //     if (useAPI){
-        //     updateChartData();
-        // };
+    //         updateChartData();
+    //     };
     // }, [stockSymbol]);
 
     return (

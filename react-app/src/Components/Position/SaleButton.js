@@ -26,7 +26,7 @@ const SaleButton = ({ position, currentValue, handleSale }) => {
                 {showInput ? (
                     <div>
                         <form className="max-w-sm mx-auto">
-                            <label htmlFor="number-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of Desired Shares:</label>
+                            <label htmlFor="desiredShares" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of Desired Shares:</label>
                             <input 
                                 id="desiredShares"
                                 type="number" 
