@@ -31,7 +31,4 @@ As a logged in user, there is a searchbar in the top right corner for leagues. T
 ### 5. Users Should Be Able To See Charts Describing Their Position in Their Leagues
 As a logged in user with portfolios, click on one of the portfolios. Click on the League Name. User should see a leaderboard chart detailing who is currently leading the league.
 
-### 6. Developers Should Do Proper Database Updating for the Leagues
-To verify this story, log in as a user and join a league by searching for leagues in the top right corner. Click on a league, join it using join league in top right corner of league page. Navigate back to dashboard, portfolio + league should appear. Logout. Log back in. If Database was properly handled, league + portfolio will be on the dashboard. 
-
 
