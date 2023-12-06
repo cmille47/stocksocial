@@ -7,7 +7,7 @@ import { fetchStockDetails, fetchQuote } from "../../Common/Services/GetStockInf
 import { useNavigate, useParams } from 'react-router-dom';
 import { createPosition, updatePosition } from "../../Common/Services/PositionService";
 import SaleButton from "./SaleButton";
-import { updatePortfolio } from "../../Common/Services/PortfolioService";
+import { updatePortfolio, updatePortfolioCurrentValue } from "../../Common/Services/PortfolioService";
 import Navbar from "../NavBar/NavBar";
 
 const Position = () => {
@@ -17,9 +17,11 @@ const Position = () => {
   const [quote, setQuote] = useState({});
   const navigate = useNavigate();
   const [position, setPosition] = useState(JSON.parse(localStorage.getItem('position')));
-  const [portfolio, setPortfolio] = useState(JSON.parse(localStorage.getItem('portfolio')));
   const position_id = position ? position.objectId : null;
+  const [portfolio, setPortfolio] = useState(JSON.parse(localStorage.getItem('portfolio')));
+  const portfolio_id = portfolio ? portfolio.objectId : null;
   const [currentValue, setCurrentValue] = useState(null);
+  const [positionUpdated, setPositionUpdated] = useState(false);
 
   useEffect(() => {
     if (!portfolio) {
@@ -64,16 +66,24 @@ const Position = () => {
 
   useEffect(() => {
     const updateCurrentValue = async () => {
-      if (quote && position_id !== null) {
+      if (quote && position_id !== null && portfolio_id !== null) {
         const updated_position = (await updatePosition(position_id, [{ key: 'EndPrice', value: quote.pc }])).toJSON();
         setPosition(updated_position);
+        setPositionUpdated(true);
         const curr = (updated_position.EndPrice * updated_position.Shares).toFixed(2);
         setCurrentValue(curr);
-        console.log('infiniteLoop')
       };
     };
     updateCurrentValue();
-  }, [quote, position_id]);
+  }, [quote, position_id, portfolio_id]);
+
+  // if position updated, means that is attached to portfolio ==> update portfolio currentValue
+  useEffect(() => {
+    if (positionUpdated) {
+      updatePortfolioCurrentValue(portfolio_id);
+      setPositionUpdated(false); 
+    };
+  }, [positionUpdated, portfolio_id]);
 
   const handleSale = async (inputvalue, type) => {
     if (type === 'sell') {

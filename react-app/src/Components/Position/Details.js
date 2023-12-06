@@ -42,7 +42,6 @@ const Details = ({ details, userDetails }) => {
                     );
                 })}
             </ul>
-            <br/><br/>
             {userDetails && (
                 <ul
                     className="tw-w-full tw-h-full tw-flex tw-flex-col tw-justify-between tw-divide-y-1 tw-divide-gray-800"
@@ -62,7 +61,7 @@ const Details = ({ details, userDetails }) => {
                     })}
                 </ul>
             )}
-        </Card>
+        </Card >
     );
 };
 
