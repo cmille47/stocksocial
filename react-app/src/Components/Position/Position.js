@@ -20,7 +20,7 @@ const Position = () => {
   const position_id = position ? position.objectId : null;
   const [portfolio, setPortfolio] = useState(JSON.parse(localStorage.getItem('portfolio')));
   const portfolio_id = portfolio ? portfolio.objectId : null;
-  const [currentValue, setCurrentValue] = useState(null);
+  const [currentValue, setCurrentValue] = useState(position ? (position.EndPrice * position.Shares).toFixed(2) : null);
   const [positionUpdated, setPositionUpdated] = useState(false);
 
   useEffect(() => {
