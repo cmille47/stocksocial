@@ -25,42 +25,44 @@ const Details = ({ details, userDetails }) => {
 
     return (
         <Card>
-            <ul
-                className="tw-w-full tw-h-full tw-flex tw-flex-col tw-justify-between tw-divide-y-1 tw-divide-gray-800"
-            >
-                <h5> Company Information </h5>
-                {Object.keys(detailsList).map((item) => {
-                    return (
-                        <li key={item} className="tw-flex-1 tw-flex tw-justify-between tw-items-center">
-                            <span>{detailsList[item]}</span>
-                            <span className="tw-font-bold">
-                                {item === "marketCapitalization"
-                                    ? `${convertMillionToBillion(details[item])}B`
-                                    : details[item]}
-                            </span>
-                        </li>
-                    );
-                })}
-            </ul>
-            {userDetails && (
+            <div className="tw-flex tw-flex-col">
                 <ul
                     className="tw-w-full tw-h-full tw-flex tw-flex-col tw-justify-between tw-divide-y-1 tw-divide-gray-800"
                 >
-                    <h5> User Position Information </h5>
-                    {Object.keys(userDetailsList).map((item) => {
+                    <h5> Company Information </h5>
+                    {Object.keys(detailsList).map((item) => {
                         return (
                             <li key={item} className="tw-flex-1 tw-flex tw-justify-between tw-items-center">
-                                <span>{userDetailsList[item]}</span>
+                                <span>{detailsList[item]}</span>
                                 <span className="tw-font-bold">
-                                    {item === "purchasePrice"
-                                        ? `$${userDetails[item]}`
-                                        : userDetails[item]}
+                                    {item === "marketCapitalization"
+                                        ? `${convertMillionToBillion(details[item])}B`
+                                        : details[item]}
                                 </span>
                             </li>
                         );
                     })}
                 </ul>
-            )}
+                {userDetails && (
+                    <ul
+                        className="tw-w-full tw-h-full tw-flex tw-flex-col tw-justify-between tw-divide-y-1 tw-divide-gray-800"
+                    >
+                        <h5> User Position Information </h5>
+                        {Object.keys(userDetailsList).map((item) => {
+                            return (
+                                <li key={item} className="tw-flex-1 tw-flex tw-justify-between tw-items-center">
+                                    <span>{userDetailsList[item]}</span>
+                                    <span className="tw-font-bold">
+                                        {item === "purchasePrice"
+                                            ? `$${userDetails[item]}`
+                                            : userDetails[item]}
+                                    </span>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                )}
+            </div>
         </Card >
     );
 };
