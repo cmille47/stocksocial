@@ -55,7 +55,7 @@ const LeagueDetails = () => {
       }
 
       const portfolios = await getLeaguePortfolios(leagueId);
-      setLeaguePortfolios(portfolios);
+      setLeaguePortfolios(portfolios.sort((a, b) => b.get('currentValue') - a.get('currentValue')));
     };
 
     fetchData();
@@ -120,7 +120,7 @@ const LeagueDetails = () => {
       );
 
       const updatedPortfolios = await getLeaguePortfolios(leagueId);
-      setLeaguePortfolios(updatedPortfolios);
+      setLeaguePortfolios(updatedPortfolios.sort((a, b) => b.get('currentValue') - a.get('currentValue')));
     } catch (error) {
       console.error('Error joining the league', error);
     }
@@ -219,7 +219,7 @@ const LeagueDetails = () => {
                 <>
                   <label>
                     Portfolio Name:
-                    <input type="text" id="portfolioName" />
+                    <input type="text" id="portfolioName" className="portfolio-name" />
                   </label>
                   <button className="dashboard-right-side join-league-button" onClick={handleJoinButtonClick}>
                     Join
