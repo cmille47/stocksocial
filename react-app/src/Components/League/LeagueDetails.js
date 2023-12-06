@@ -14,8 +14,7 @@ import {
 } from '../../Common/Services/PortfolioService';
 import { getUserDetails } from '../../Common/Services/AuthService';
 import {
-  getCurrentNumPlayers,
-  getLeaderBoard,
+  getCurrentNumPlayers
 } from '../../Common/Services/LeagueService';
 import '../../Styles/LeagueDetails.css';
 import Navbar from '../NavBar/NavBar';
