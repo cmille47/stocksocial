@@ -129,6 +129,8 @@ export const createNewPortfolio = async (userId, leagueId, startingAmount, portf
     portfolio.set("LeagueID", leagueId);
     portfolio.set("PortfolioName", portfolioName); // Use the provided portfolio name
     portfolio.set("StartingAmount", parseInt(startingAmount));
+    portfolio.set("RemainingCash", parseInt(startingAmount));
+    portfolio.set("currentValue", parseInt(startingAmount));
 
     try {
         const newPortfolio = await portfolio.save();
@@ -151,6 +153,7 @@ export const getPortfolioCurrentValue = async (portfolioID) => {
 
         results.forEach((position) => {
             curr_val += position.get('EndPrice') * position.get('Shares');
+            console.log("Curr_val: ", curr_val)
         });
 
         const Portfolio = Parse.Object.extend('Portfolio');
@@ -158,6 +161,7 @@ export const getPortfolioCurrentValue = async (portfolioID) => {
         const portfolio = await query2.get(portfolioID);
         
         curr_val += portfolio.get('RemainingCash');
+        console.log("Remaining Cash: ", portfolio.get('RemainingCash'))
         return curr_val;
     } catch (error) {
         console.error('Error fetching portfolio current value', error);
