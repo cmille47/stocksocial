@@ -64,10 +64,13 @@ const DashboardGood = () => {
     }
   }, [portfolios]);
 
+  // utilize stock api to update position prices and hence portfolio current value
   useEffect(() => {
-    if (portfolios.length > 0 && useAPI) {
+    if (portfolios.length > 0) {
       portfolios.forEach((portfolio) => {
-        updatePortfolioPositions(portfolio.id);
+        if (useAPI) {
+          updatePortfolioPositions(portfolio.id);
+        };
         updatePortfolioCurrentValue(portfolio.id);
       });
     }

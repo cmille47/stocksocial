@@ -144,6 +144,7 @@ export const getPortfolioCurrentValue = async (portfolioID) => {
     const Position = Parse.Object.extend('Position');
     const query = new Parse.Query(Position);
     query.equalTo('PortfolioID', portfolioID);
+    query.equalTo('DateSold', undefined);
     
     try {
         const results = await query.find();
