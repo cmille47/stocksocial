@@ -1,4 +1,55 @@
 
+
+
+
+# Change Log
+All notable changes to this project will be documented in this file.
+ 
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
+and this project adheres to [Semantic Versioning](http://semver.org/).
+ 
+## [0.3.0] - 2023-12-08
+ 
+Here we write upgrading notes for brands. It's a team effort to make them as
+straightforward as possible.
+ 
+### Added
+- [StockSocial-2023] Card.js - Groups stock info.
+- [StockSocial-2023] Chart.js - Charts the stock history for user convenience.
+- [StockSocial-2023] Details.js - Provides the stock details and company information.
+- [StockSocial-2023] Header.js - A header displaying remaining cash.
+- [StockSocial-2023] Overview.js - Overview of stock
+- [StockSocial-2023] Position.js - Displays the information of the position and allows the buying and selling of positions.
+- [StockSocial-2023] SaleButton.js - Actual code for buying and selling.
+- [StockSocial-2023] APIContext.js - Deals with API calling. Contains flag that uses mock data or real data. Allows us to perserve API calls.
+- [StockSocial-2023] Navbar.js - Used bootstrap to create a NavBar that can take oyu to your dashboard, the about us page, or logout.
+- [StockSocial-2023] LogoutButton.js - Allows the user to logout by clearing local storage.
+- [StockSocial-2023] AboutUs - A page to add some humor to our website and tell the user a little about the creators.
+
+
+ 
+### Changed
+- [StockSocial-2023] Components - just added more proper routing.
+- [StockSocial-2023] Images - Added more background images
+- [StockSocial-2023] Styling - Added more files for proper styling
+- [StockSocial-2023] DashboardGood.js - Component for dashboard. Has a new leaderboard and bootstrap styling. From the dashboard you can go to either a specific league or specific portfolio. All old features remained.
+- [StockSocial-2023] Portfolio.js - Added styling. Can now click on the portfolio positions to see more details about the specific position.
+- [StockSocial-2023] README - added user stories and instructions on how to use application.
+- [StockSocial-2023] LeagueDetails.js - has a correct ordering leader board now that displays the portfolio current values. Also some nice styling.
+ 
+### Fixed
+- [StockSocial-2023] PortfolioService.js - Going portfolio only if user exists and is correct one. Also when a portfolio is created when creating/joining a league the default current value is now the league starting amount of cash.
+- [StockSocial-2023] Components.js - Cleaning up naming conventions
+- [StockSocial-2023] SearchPositions - Fixed bugs so it correctly retrieves positions
+- [StockSocial-2023] NewLeagueForm - just added styling and that when you create a league you have to create a portfolio within that league.
+
+
+
+
+
+
+_______________________________________________________________________________________________________________
+
 # Change Log
 All notable changes to this project will be documented in this file.
  
