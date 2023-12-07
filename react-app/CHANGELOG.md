@@ -1,7 +1,3 @@
-
-
-
-
 # Change Log
 All notable changes to this project will be documented in this file.
  
@@ -50,6 +46,8 @@ straightforward as possible.
 
 _______________________________________________________________________________________________________________
 
+
+
 # Change Log
 All notable changes to this project will be documented in this file.
  
@@ -90,6 +88,8 @@ straightforward as possible.
 
 
 _______________________________________________________________________________________________________________
+
+
 # Change Log
 All notable changes to this project will be documented in this file.
  
