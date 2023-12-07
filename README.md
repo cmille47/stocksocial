@@ -31,4 +31,11 @@ As a logged in user, there is a searchbar in the top right corner for leagues. T
 ### 5. Users Should Be Able To See Charts Describing Their Position in Their Leagues
 As a logged in user with portfolios, click on one of the portfolios. Click on the League Name. User should see a leaderboard chart detailing who is currently leading the league.
 
+### 6. Developers Should have the backend database update Portfolios, Leagues, and LeagueMembership when creating or joining a league
+When you join a league all the proper backend classes are updated accordingly
+
+### 7. (In excel google form, meant to say user). User should have a personalized Dashboard
+Users can complete story number 4 on the Dashboard, can see their portfolios, and their leagues.
+
+// As we implemented our stories, we did slight modifications as well as added others. There was some overlap stories so we felt it was necessary to add some more to demonstrate our knowledge.
 
